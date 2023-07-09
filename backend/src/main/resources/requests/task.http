@@ -1,0 +1,74 @@
+# создание задачи
+POST http://localhost:8080/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Content-Type: application/json
+
+{
+  "title": "title_task2",
+  "description": "title_description2",
+  "deadline": "2020-12-20 12:12:01",
+  "category": {
+    "id": 6
+  },
+  "status": {
+    "id": 1
+  },
+  "priority": {
+    "id": 1
+  },
+  "regularity": {
+    "id": 1
+  }
+}
+
+###
+# создание задачи
+PUT http://localhost:8080/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Content-Type: application/json
+
+{
+  "id": 21,
+  "title": "title_task22",
+  "description": "title_description22",
+  "deadline": "2022-12-20 12:12:01",
+  "category": {
+    "id": 6
+  },
+  "status": {
+    "id": 1
+  },
+  "priority": {
+    "id": 1
+  },
+  "regularity": {
+    "id": 1
+  }
+}
+###
+# получить задачи по id категории
+GET http://localhost:8080/task/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Accept: application/json
+
+###
+# получить задачи по пользователю
+GET http://localhost:8080/task/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Accept: application/json
+
+###
+# фильтрация задач по стутусу, не работает
+GET http://localhost:8080/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+###
+# удалять задачу по пользователю
+DELETE localhost:8080/task/22
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Accept: application/json

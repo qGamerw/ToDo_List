@@ -1,0 +1,16 @@
+POST http://localhost:8080/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Content-Type: application/json
+
+{
+  "name": "category2"
+}
+
+###
+
+GET http://localhost:8080/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Accept: application/json
+
+###
+
