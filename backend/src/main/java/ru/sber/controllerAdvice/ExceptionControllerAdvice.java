@@ -10,23 +10,6 @@ import ru.sber.model.ErrorDetails;
 /**
  * Контроллер для перехвата исключений
  */
-//@RestControllerAdvice
-//public class ExceptionControllerAdvice {
-//
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(RuntimeException.class)
-//    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-//        Map<String, String> errors = new HashMap<>();
-//        ex.getBindingResult().getAllErrors().forEach((error) -> {
-//            String fieldName = ((FieldError) error).getField();
-//            String errorMessage = error.getDefaultMessage();
-//            errors.put(fieldName, errorMessage);
-//        });
-//        return errors;
-//    }
-//
-//}
-
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
