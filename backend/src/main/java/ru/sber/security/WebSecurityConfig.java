@@ -2,6 +2,7 @@ package ru.sber.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,13 +36,10 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                                auth.requestMatchers("/**").permitAll()
-//                                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-//                                .requestMatchers(HttpMethod.OPTIONS, "/users/**").permitAll()
-//                                .requestMatchers(HttpMethod.OPTIONS, "/products/**").permitAll()
-//                                .requestMatchers(HttpMethod.OPTIONS, "/cart/**").permitAll()
-//                                .requestMatchers(HttpMethod.OPTIONS, "/payment/**").permitAll()
-                                        .anyRequest().authenticated()
+                        auth.requestMatchers("/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/category/**").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/category/**").permitAll()
+                                .anyRequest().authenticated()
                 );
 
         http.authenticationProvider(authenticationProvider(userDetailsService));

@@ -33,7 +33,7 @@ public class CategoryController {
                 .build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<LimitCategory>> getCategoryByUserId() {
         log.info("Получает категории по id пользователя");
 
