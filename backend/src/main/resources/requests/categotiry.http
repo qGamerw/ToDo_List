@@ -1,13 +1,15 @@
+# создаить категорию у пользователя
+
 POST http://localhost:8080/category
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTQiLCJpYXQiOjE2ODg5MzEwMjAsImV4cCI6MTY4OTAxNzQyMH0.pOfIAQ0D5JEMG-p7EHiAiTKGoGBesLtE5Vz11FtR0Jg
 Content-Type: application/json
 
 {
-  "name": "category2"
+  "name": "category4"
 }
 
 ###
-
+# получать категории у пользователя
 GET http://localhost:8080/category
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTMiLCJpYXQiOjE2ODg5MDM0MzgsImV4cCI6MTY4ODk4OTgzOH0.VmqaTVFEoxZt_x9-OmXZuhdKhmDca7O43_zR--BuQRA
 Accept: application/json

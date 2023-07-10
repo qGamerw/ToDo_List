@@ -1,7 +1,7 @@
 package ru.sber.entities;
 
 /**
- * Перечисляем все рали для пользователя сай
+ * Перечисление всех ролей
  */
 public enum ERole {
     ROLE_USER,

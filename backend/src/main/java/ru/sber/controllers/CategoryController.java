@@ -10,6 +10,9 @@ import ru.sber.services.CategoryService;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * Класс для взаимодействия с категорией
+ */
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)

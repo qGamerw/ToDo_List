@@ -2,12 +2,14 @@ package ru.sber.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Задача
+ */
 @Entity
 @Data
 @Table(name = "Tasks")

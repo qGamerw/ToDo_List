@@ -3,6 +3,9 @@ package ru.sber.model;
 import lombok.Data;
 import ru.sber.entities.Category;
 
+/**
+ * Класс для вывода ограниченной информации на экран
+ */
 @Data
 public class LimitCategory {
     private long id;

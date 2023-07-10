@@ -4,13 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.entities.Status;
-import ru.sber.model.LimitTask;
 import ru.sber.entities.Task;
+import ru.sber.model.LimitTask;
 import ru.sber.services.TaskService;
 
 import java.net.URI;
 import java.util.List;
 
+/**
+ * Класс для взаимодействия с задачей
+ */
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)

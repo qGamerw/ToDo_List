@@ -5,6 +5,9 @@ import ru.sber.entities.Task;
 
 import java.util.List;
 
+/**
+ * Репозиторий с задачами
+ */
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByCategoryId(long id);

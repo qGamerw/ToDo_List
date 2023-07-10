@@ -1,8 +1,5 @@
 package ru.sber.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import ru.sber.entities.Priority;
 import ru.sber.entities.Regularity;
@@ -11,6 +8,9 @@ import ru.sber.entities.Task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Класс для вывода ограниченной информации на экран
+ */
 @Data
 public class LimitTask {
 

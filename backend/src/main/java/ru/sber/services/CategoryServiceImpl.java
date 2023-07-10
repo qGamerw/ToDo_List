@@ -11,7 +11,6 @@ import ru.sber.repositories.CategoryRepository;
 import ru.sber.security.services.UserDetailsImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -41,10 +40,10 @@ public class CategoryServiceImpl implements CategoryService {
                 .toList();
     }
 
-    private long getUserId(){
+    private long getUserId() {
         var user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (user instanceof UserDetailsImpl){
+        if (user instanceof UserDetailsImpl) {
             return ((UserDetailsImpl) user).getId();
         } else {
             throw new NoFoundUserException("Пользователь не найден");

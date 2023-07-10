@@ -1,6 +1,9 @@
 package ru.sber.exceptions;
 
-public class NoFoundTaskException extends RuntimeException{
+/**
+ * Исключения для несуществующей задачи
+ */
+public class NoFoundTaskException extends RuntimeException {
     public NoFoundTaskException(String message) {
         super(message);
     }

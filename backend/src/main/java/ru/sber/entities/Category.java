@@ -1,11 +1,13 @@
 package ru.sber.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Категория
+ */
 @Entity
 @Data
 @NoArgsConstructor

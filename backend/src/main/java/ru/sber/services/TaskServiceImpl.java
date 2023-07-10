@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.sber.entities.Status;
+import ru.sber.entities.Task;
 import ru.sber.exceptions.NoFoundCategoryException;
 import ru.sber.exceptions.NoFoundUserException;
 import ru.sber.model.LimitTask;
-import ru.sber.entities.Task;
 import ru.sber.repositories.CategoryRepository;
 import ru.sber.repositories.TaskRepository;
 import ru.sber.security.services.UserDetailsImpl;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final CategoryRepository categoryRepository;
@@ -28,7 +28,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public long addTask(Task task) {
-        if (categoryRepository.existsByIdAndUserId(task.getCategory().getId(), getUserId())){
+        if (categoryRepository.existsByIdAndUserId(task.getCategory().getId(), getUserId())) {
             return taskRepository.save(task).getId();
 
         } else {
@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public boolean update(Task task) {
-        if (taskRepository.existsByCategoryUserIdAndId(getUserId(), task.getId())){
+        if (taskRepository.existsByCategoryUserIdAndId(getUserId(), task.getId())) {
             log.info("dsf");
             taskRepository.save(task);
 
@@ -50,7 +50,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public List<LimitTask> getListTaskByCategoryId(long categoryId) {
-        if (categoryRepository.existsByIdAndUserId(categoryId, getUserId())){
+        if (categoryRepository.existsByIdAndUserId(categoryId, getUserId())) {
 
             return taskRepository.findByCategoryId(categoryId).stream().map(LimitTask::new).toList();
         } else {
@@ -64,10 +64,10 @@ public class TaskServiceImpl implements TaskService{
         return taskRepository.findByCategoryUserId(getUserId()).stream().map(LimitTask::new).toList();
     }
 
-    private long getUserId(){
+    private long getUserId() {
         var user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (user instanceof UserDetailsImpl){
+        if (user instanceof UserDetailsImpl) {
             return ((UserDetailsImpl) user).getId();
         } else {
             throw new NoFoundUserException("Пользователь не найден");
@@ -76,7 +76,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public boolean deleteById(long id) {
-        if (taskRepository.existsByCategoryUserIdAndId(getUserId(), id)){
+        if (taskRepository.existsByCategoryUserIdAndId(getUserId(), id)) {
             taskRepository.deleteById(id);
 
             return true;

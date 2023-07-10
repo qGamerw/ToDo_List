@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Определения приоритета у задач
+ */
 @Entity
 @Data
 @NoArgsConstructor
