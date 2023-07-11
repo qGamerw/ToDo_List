@@ -43,4 +43,32 @@ public class CategoryController {
                 .ok()
                 .body(category);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LimitCategory> getCategoryById(@PathVariable long id) {
+        log.info("Получает категории по id");
+
+        LimitCategory category = categoryService.getCategoryById(id);
+
+        return ResponseEntity
+                .ok()
+                .body(category);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategoryById(@PathVariable long id) {
+        log.info("Получает категории по id");
+
+        boolean isCategory = categoryService.deleteCategoryById(id);
+
+        if (isCategory) {
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        } else {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+    }
 }

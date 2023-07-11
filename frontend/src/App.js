@@ -252,7 +252,6 @@ import {
     CalendarOutlined,
     CheckCircleOutlined,
     RestOutlined,
-    SettingOutlined,
     UserOutlined
 } from '@ant-design/icons';
 import {Button, Form, Input, Layout, Menu, Modal, theme} from 'antd';
@@ -265,15 +264,20 @@ import RegistrationPage from "./pages/Registration";
 import LoginPage from "./pages/LoginPage";
 import authService from "./services/auth.service";
 import {logout} from "./slices/authSlice";
+import AllTaskPage from "./pages/AllTaskPage";
+import TaskPage from "./pages/TaskPage";
+import statusService from "./services/statusService";
+import priorityService from "./services/priorityService";
 
 
 const {Header, Content, Footer, Sider} = Layout;
+
 
 const App = () => {
     const [collapsed, setCollapsed] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const allProducts = useSelector((state) => state.categories.categories);
+    const userCategory = useSelector((state) => state.categories.categories);
     const isLoginIn = useSelector((state) => state.auth.isLoggedIn);
     const [modalVisible, setModalVisible] = useState(false);
     const [form] = Form.useForm();
@@ -283,8 +287,12 @@ const App = () => {
         setModalVisible(true);
     };
 
+    statusService.getAllStatus(dispatch);
+    priorityService.getAllPriority(dispatch);
+
     useEffect(() => {
         categoriesService.getCategories(dispatch);
+
     }, []);
 
     function getItem(label, key, icon, children) {
@@ -297,11 +305,10 @@ const App = () => {
     }
 
     const getUserCategory = () => {
-        return allProducts.map(item => {
+        return userCategory.map(item => {
             return (
                 {
                     key: item.id,
-                    icon: <SettingOutlined/>,
                     children: null,
                     label: item.name,
                 }
@@ -310,23 +317,11 @@ const App = () => {
     }
 
     const items = [
-        (isLoginIn? getItem('Профиль', 'profile', <UserOutlined/>) : null),
-        (isLoginIn? getItem('Все задачи', 'all-task-category', <CheckCircleOutlined/>) : null),
-        (isLoginIn? getItem('Категории', 'category', <CalendarOutlined/>, [
-            getItem('Личное', null, null, [
-                getItem('Дом', '1.01'),
-                getItem('Семья', '2.01'),
-                getItem('Досуг', '3.01')]
-                    , 'group'),
-            getItem('Работа', null, null, [
-                getItem('Дела до работы', '4.01'),
-                getItem('На работе', '5.01'),
-                getItem('После работе', '6.01')
-            ], 'group'),
-            getItem('Пользовательские группы', null, null, [...getUserCategory()], 'group'),
-        ]): null),
-        (isLoginIn? getItem('Создать категорию', 'create_catalog', <AppstoreAddOutlined/>) : null),
-        (isLoginIn? getItem('Архив', 'all-task', <RestOutlined/>) : null),
+        (isLoginIn ? getItem('Профиль', 'profile', <UserOutlined/>) : null),
+        (isLoginIn ? getItem('Все задачи', 'all-task-category', <CheckCircleOutlined/>) : null),
+        (isLoginIn ? getItem('Категории', 'category', <CalendarOutlined/>, [...getUserCategory(),
+            getItem('Создать категорию', 'create_catalog', <AppstoreAddOutlined/>)],) : null),
+        (isLoginIn ? getItem('Архив', 'all-task', <RestOutlined/>) : null),
         getItem((isLoginIn ? 'Выйти' : "Войти"), 'sign', <AppstoreAddOutlined/>),
     ];
 
@@ -342,19 +337,22 @@ const App = () => {
             console.log('click', e);
             openModalCreateCategory();
         } else if (e.key === "sign") {
-            if (!isLoginIn){
+            if (!isLoginIn) {
                 console.log('click', e);
                 navigate("/")
             } else {
                 dispatch(logout(user));
                 authService.logout();
             }
-
-        } else if (e.keyPath[2] === "category") {
+        } else if (e.keyPath[1] === "category") {
             console.log('click', e);
-            navigate("/category/" + e.key);
+            const id = e.key;
+            navigate("/category/" + id);
+        } else if (e.key === "all-task-category") {
+            console.log('click', e);
+            navigate("/all-task/");
         }
-
+        console.log(e)
     };
 
     const onFinish = (values) => {
@@ -362,7 +360,6 @@ const App = () => {
         setModalVisible(false);
         form.resetFields();
     };
-
 
     return (
         <Layout
@@ -374,7 +371,7 @@ const App = () => {
                 <div className="demo-logo-vertical"/>
                 <Menu theme="dark"
                       defaultSelectedKeys={['1']}
-                      mode="vertical"
+                      mode="inline"
                       items={items}
                       onClick={onClick}
                       onCancel={() => setModalVisible(false)}
@@ -402,10 +399,12 @@ const App = () => {
                     >
                         <Routes>
                             <Route index element={<LoginPage/>}/>
-                            {/*<Route path="/setting-products" element={<SettingProducts/>}/>*/}
-                            <Route path="/product" element={<LoginPage/>}/>
                             <Route path="/register" element={<RegistrationPage/>}/>
+                            <Route path="/all-task" element={<AllTaskPage/>}/>
+                            <Route path="/category/*" element={<TaskPage/>}/>
+
                             <Route path="*" element={<NotFoundPage/>}/>
+
                         </Routes>
                     </div>
 

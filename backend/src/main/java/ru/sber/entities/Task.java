@@ -23,7 +23,7 @@ public class Task {
     private String title;
 
     @Column(nullable = false)
-    @Size(max = 20)
+    @Size(max = 100)
     private String description;
 
     @Column(name = "deadline")

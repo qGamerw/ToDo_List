@@ -24,4 +24,8 @@ public interface CategoryService {
      * @return категория
      */
     List<LimitCategory> getCategoryById();
+
+    LimitCategory getCategoryById(long id);
+
+    boolean deleteCategoryById(long id);
 }

@@ -8,11 +8,11 @@ insert into ukhinms.roles (name)
 values ('ROLE_ADMIN');
 
 insert into ukhinms.statuses (name)
-values ('EXECUTED');
-insert into ukhinms.statuses (name)
-values ('EXECUTED');
-insert into ukhinms.statuses (name)
 values ('IN_PROCESS');
+insert into ukhinms.statuses (name)
+values ('EXECUTED');
+insert into ukhinms.statuses (name)
+values ('PENDING');
 
 insert into ukhinms.priorities (name)
 values ('LOW');

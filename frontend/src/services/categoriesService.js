@@ -1,5 +1,5 @@
 import axios from "axios";
-import {set} from "../slices/categoriesSlice";
+import {set, setName} from "../slices/categoriesSlice";
 import {API_URL} from "./API_URL";
 import authHeader from "./auth-header";
 
@@ -37,38 +37,40 @@ const createCategory = (category, dispatch) => {
             console.error(_content)
         });
 };
-//
-// const updateProduct = (product, dispatch) => {
-//     return axios.put(API_URL_PRODUCT, product, {headers: authHeader()}).then(
-//         (response) => {
-//             getProducts(dispatch)
-//         },
-//         (error) => {
-//             const _content = (error.response && error.response.data) ||
-//                 error.message ||
-//                 error.toString();
-//
-//             console.error(_content)
-//         });
-// };
-//
-// const deleteProduct = (id, dispatch) => {
-//     return axios.delete(API_URL_PRODUCT + `/${id}`, {headers: authHeader()}).then(
-//         (response) => {
-//             getProducts(dispatch)
-//         },
-//         (error) => {
-//             const _content = (error.response && error.response.data) ||
-//                 error.message ||
-//                 error.toString();
-//
-//             console.error(_content)
-//         });
-// };
 
-const productService = {
-    getCategories,
-    createCategory,
+const getCategoryById = (id, dispatch) => {
+    return axios.get('/category/'+id, {headers: authHeader()}).then(
+        (response) => {
+            dispatch(setName(response.data));
+        },
+        (error) => {
+            const _content = (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+
+            console.error(_content)
+        });
 };
 
-export default productService
+const deleteCategory = (id, dispatch) => {
+    return axios.delete('/category/'+id, {headers: authHeader()}).then(
+        (response) => {
+            getCategories(dispatch)
+        },
+        (error) => {
+            const _content = (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+
+            console.error(_content)
+        });
+};
+
+const categoriesService = {
+    getCategories,
+    createCategory,
+    getCategoryById,
+    deleteCategory,
+};
+
+export default categoriesService

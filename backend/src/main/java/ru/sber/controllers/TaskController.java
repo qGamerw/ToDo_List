@@ -35,7 +35,7 @@ public class TaskController {
     }
 
     @PutMapping
-    public ResponseEntity<List<LimitTask>> getListTaskByCategoryId(@RequestBody Task task) {
+    public ResponseEntity<List<LimitTask>> updateTask(@RequestBody Task task) {
         log.info("Обновляет задачу по id {}", task.getId());
 
         var isUpdate = taskService.update(task);

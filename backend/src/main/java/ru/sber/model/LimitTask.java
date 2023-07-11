@@ -1,5 +1,6 @@
 package ru.sber.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import ru.sber.entities.Priority;
 import ru.sber.entities.Regularity;
@@ -20,6 +21,7 @@ public class LimitTask {
 
     private String description;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deadline;
 
     private Status status;
@@ -27,6 +29,8 @@ public class LimitTask {
     private Priority priority;
 
     private Regularity regularity;
+
+    private LimitCategory limitCategory;
 
     public LimitTask(Task task) {
         this.id = task.getId();
@@ -36,5 +40,6 @@ public class LimitTask {
         this.status = task.getStatus();
         this.priority = task.getPriority();
         this.regularity = task.getRegularity();
+        this.limitCategory = new LimitCategory(task.getCategory());
     }
 }

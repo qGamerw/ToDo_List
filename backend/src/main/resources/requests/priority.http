@@ -1,0 +1,6 @@
+###
+# получить задачи по id категории
+GET http://localhost:8080/priority
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZnNkZmtvcG91aSIsImlhdCI6MTY4OTA1OTQxMiwiZXhwIjoxNjg5MTQ1ODEyfQ.jedqk9nkTH27NZVX5FAT0sYtebwaOS9ZQpKcbE46dU0
+Accept: application/json
+

@@ -40,6 +40,18 @@ public class CategoryServiceImpl implements CategoryService {
                 .toList();
     }
 
+    @Override
+    public LimitCategory getCategoryById(long id) {
+        return new LimitCategory(categoryRepository.findById(id));
+    }
+
+    @Override
+    public boolean deleteCategoryById(long id) {
+        categoryRepository.deleteById(id);
+
+        return true;
+    }
+
     private long getUserId() {
         var user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
