@@ -4,7 +4,7 @@ import lombok.Data;
 import ru.sber.entities.Category;
 
 /**
- * Класс для вывода ограниченной информации на экран
+ * Класс для вывода ограниченной информации о пользователе
  */
 @Data
 public class LimitCategory {

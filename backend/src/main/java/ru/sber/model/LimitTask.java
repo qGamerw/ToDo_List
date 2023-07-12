@@ -10,7 +10,7 @@ import ru.sber.entities.Task;
 import java.time.LocalDateTime;
 
 /**
- * Класс для вывода ограниченной информации на экран
+ * Класс для вывода информации о категориях
  */
 @Data
 public class LimitTask {
