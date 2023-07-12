@@ -131,9 +131,7 @@ const CreateTask = ({categoryId, drawerVisible}) => {
                                 name="status"
                                 label="Статус"
                             >
-                                <Select placeholder="Введите статус задачи" onChange={(e) => {
-                                    // setStatus(e.target.value);
-                                    console.log(e.target.value)}}>
+                                <Select placeholder="Введите статус задачи" onChange={(e) => setStatus(e)} >
                                     {statusRepository.map((status) => (
                                         <Select.Option key={status.id} value={status.id}>
                                             {status.name}
@@ -150,7 +148,7 @@ const CreateTask = ({categoryId, drawerVisible}) => {
                                 name="priority"
                                 label="Приоритет"
                             >
-                                <Select placeholder="Введите приоритет задачи" >
+                                <Select placeholder="Введите приоритет задачи" onChange={(e) => setPriority(e)} >
                                     {priorityRepository.map((priority) => (
                                         <Select.Option key={priority.id} value={priority.id}>
                                             {priority.name}

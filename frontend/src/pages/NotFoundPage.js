@@ -5,7 +5,7 @@ import React from "react";
 export const NotFoundPage = () => {
     const handleButtonClick = () => {
         setTimeout(() => {
-            message.success('Cum и киберпространство!', 3);
+            message.success('Привет!', 3);
         }, 100);
     };
     handleButtonClick();

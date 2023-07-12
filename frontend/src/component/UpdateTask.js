@@ -2,7 +2,7 @@ import {EditOutlined, PlusOutlined} from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
 import { useState } from 'react';
 import taskService from "../services/tasksService";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import dayjs from "dayjs";
 const { Option } = Select;
 const UpdateTask = ({ task, drawerVisible }) => {
@@ -13,6 +13,9 @@ const UpdateTask = ({ task, drawerVisible }) => {
     const [status, setStatus] = useState('');
     const [priority, setPriority] = useState('');
     const [regularity, setRegularity] = useState('');
+
+    const statusRepository = useSelector((state) => state.status.status);
+    const priorityRepository = useSelector((state) => state.priority.priority);
 
     const showDrawer = () => {
         setOpen(true);
@@ -32,16 +35,23 @@ const UpdateTask = ({ task, drawerVisible }) => {
         setDateTime(value);
     };
 
-    const category = { "id" : task.limitCategory.id };
     const updateTask = () => {
         taskService.updateTask({ ...task,
-            title : title || task.title,
-            description : description || task.description,
-            deadline : (deadline? deadline.format("YYYY-MM-DD HH:mm:ss") : task.deadline),
-            category : category || task.category,
-            status : status || task.status,
-            priority : priority || task.priority,
-            regularity : regularity || task.regularity
+            "title": title || "",
+            "description": description || "",
+            "deadline": (deadline ? deadline.format("YYYY-MM-DD HH:mm:ss") : "2026-12-31 00:00:00" ),
+            "category": {
+                "id": task.limitCategory.id
+            },
+            "status": {
+                "id": status || 1
+            },
+            "priority": {
+                "id": priority || 1
+            },
+            "regularity": {
+                "id": 1
+            }
         }, dispatch);
         setOpen(false);
     };
@@ -77,7 +87,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="title"
-                                label="Title"
+                                label="Заглавление"
                             >
                                 <Input
                                     value={title}
@@ -88,7 +98,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="description"
-                                label="Description"
+                                label="Описание"
                             >
                                 <Input
                                     value={description}
@@ -103,7 +113,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="deadline"
-                                label="Deadline"
+                                label="Срок завершения"
                             >
                                 <DatePicker
                                     showTime
@@ -118,11 +128,14 @@ const UpdateTask = ({ task, drawerVisible }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="status"
-                                label="Status"
+                                label="Статус"
                             >
-                                <Select placeholder="Please select an owner">
-                                    <Option value="xiao">Xiaoxiao Fu</Option>
-                                    <Option value="mao">Maomao Zhou</Option>
+                                <Select placeholder="Введите статус задачи" onChange={(e) => setStatus(e)} >
+                                    {statusRepository.map((status) => (
+                                        <Select.Option key={status.id} value={status.id}>
+                                            {status.name}
+                                        </Select.Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -132,11 +145,14 @@ const UpdateTask = ({ task, drawerVisible }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="priority"
-                                label="Priority"
+                                label="Приоритет"
                             >
-                                <Select placeholder="Please select an owner">
-                                    <Option value="xiao">Xiaoxiao Fu</Option>
-                                    <Option value="mao">Maomao Zhou</Option>
+                                <Select placeholder="Введите приоритет задачи" onChange={(e) => setPriority(e)} >
+                                    {priorityRepository.map((priority) => (
+                                        <Select.Option key={priority.id} value={priority.id}>
+                                            {priority.name}
+                                        </Select.Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>

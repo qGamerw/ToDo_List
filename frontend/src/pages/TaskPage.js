@@ -107,8 +107,7 @@ const TaskPage = () => {
                         >
                             <Meta title="Название" description={task.title}/><br/>
                             <Meta title="Описание" description={task.description}/><br/>
-                            <Meta title="Срок завершения"
-                                  description={task.deadline}/><br/>
+                            <Meta title="Срок завершения" description={task.deadline}/><br/>
                             <Meta title="Статус" description={task.status.name}/><br/>
                             <Meta title="Приоритет" description={task.priority.name}/><br/>
                             <Meta title="Повторение задачи" description={task.regularity.dateNotify}/><br/>
