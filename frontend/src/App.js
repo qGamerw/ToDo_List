@@ -287,12 +287,15 @@ const App = () => {
         setModalVisible(true);
     };
 
-    statusService.getAllStatus(dispatch);
-    priorityService.getAllPriority(dispatch);
+    if (isLoginIn) {
+        statusService.getAllStatus(dispatch);
+        priorityService.getAllPriority(dispatch);
+    }
 
     useEffect(() => {
-        categoriesService.getCategories(dispatch);
-
+        if (isLoginIn) {
+            categoriesService.getCategories(dispatch);
+        }
     }, []);
 
     function getItem(label, key, icon, children) {
@@ -339,7 +342,7 @@ const App = () => {
         } else if (e.key === "sign") {
             if (!isLoginIn) {
                 console.log('click', e);
-                navigate("/")
+                navigate("/api/auth/signin")
             } else {
                 dispatch(logout(user));
                 authService.logout();
@@ -350,8 +353,12 @@ const App = () => {
             navigate("/category/" + id);
         } else if (e.key === "all-task-category") {
             console.log('click', e);
-            navigate("/all-task/");
+            navigate("/all-task");
+        } else if (e.key === "all-task") {
+            console.log('click', e);
+            navigate("/archive");
         }
+
         console.log(e)
     };
 
@@ -398,10 +405,12 @@ const App = () => {
                         }}
                     >
                         <Routes>
-                            <Route index element={<LoginPage/>}/>
-                            <Route path="/register" element={<RegistrationPage/>}/>
+                            {/*<Route index element={<LoginPage/>}/>*/}
+                            <Route path="/api/auth/signin" element={<LoginPage/>}/>
+                            <Route path="/api/auth/signup" element={<RegistrationPage/>}/>
                             <Route path="/all-task" element={<AllTaskPage/>}/>
                             <Route path="/category/*" element={<TaskPage/>}/>
+                            <Route path="/archive" element={<AllTaskPage/>}/>
 
                             <Route path="*" element={<NotFoundPage/>}/>
 

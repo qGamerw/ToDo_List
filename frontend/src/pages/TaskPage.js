@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Button, Card, Checkbox, Col, Input, List, Popover, Radio, Row, Select, Tooltip} from 'antd';
+import {Button, Card, Checkbox, Col, Divider, Input, List, Popover, Radio, Row, Select, Tooltip} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/tasksService";
 import Meta from "antd/es/card/Meta";
@@ -22,6 +22,7 @@ const TaskPage = () => {
     const options = ['Show', 'Hide', 'Center'];
     const [arrow, setArrow] = useState('Show');
     const category = useSelector((state) => state.categories.categoryName);
+    const statusRepository = useSelector((state) => state.status.status);
 
     let id = useParams()["*"];
 
@@ -38,8 +39,14 @@ const TaskPage = () => {
     }, [searchTerm, tasks]);
 
 
-    const handleButtonClick = (task, dispatch) => {
+    const handleButtonClickToDelete = (task, dispatch) => {
         taskService.deleteTask(task.id, dispatch);
+    }
+    const handleButtonClickToComplete = (task, dispatch) => {
+        const idComplete = statusRepository.filter(item => item.name === "EXECUTED");
+        console.log(idComplete);
+
+        // taskService.updateTask(task)
     }
 
     const handleDrawerClose = () => {
@@ -67,11 +74,17 @@ const TaskPage = () => {
     const day = today.getDate();
     const month = months[today.getMonth()];
 
+    const countComplete = filteredProducts.filter(item => item.status.name === "EXECUTED").length;
+    const countAll = filteredProducts.length;
+
     return (
         <div>
             <div>
                 <Meta title="Вы находитетсь в категории " description={category? category.name : null}/><br/>
                 <Meta title="Сегодняшняя дата " description={dayOfWeek + ', ' + day + ' ' + month}/><br/>
+                {countAll > 0 ? <Meta title="Статистика выполнения заданий"
+                                      description={`Выполнено ${countComplete} из ${countAll} задач`} />: null}<br/>
+
                 <CreateTask categoryId={id} drawerVisible={drawerVisible} handleDrawerClose={handleDrawerClose}/>
                 <Tooltip placement="top" title="Полностью удаляет категорию" arrow={mergedArrow}>
                     <Button
@@ -106,8 +119,10 @@ const TaskPage = () => {
                             }}
                         >
                             <Meta title="Название" description={task.title}/><br/>
-                            <Meta title="Описание" description={task.description}/><br/>
-                            <Meta title="Срок завершения" description={task.deadline}/><br/>
+
+                            {"" !== task.description ? <> <Meta title="Описание" description={task.description}/> <br/> </>: null}
+                            {"2026-12-31 00:00:00" !== task.deadline ? <> <Meta title="Срок завершения" description={task.deadline}/> <br/> </>: null}
+
                             <Meta title="Статус" description={task.status.name}/><br/>
                             <Meta title="Приоритет" description={task.priority.name}/><br/>
                             <Meta title="Повторение задачи" description={task.regularity.dateNotify}/><br/>
@@ -117,7 +132,7 @@ const TaskPage = () => {
                                 <Button
                                     type="primary"
                                     style={{marginLeft: 10, marginTop: 10, marginBottom: 10}}
-                                    onClick={() => handleButtonClick(task, dispatch)}
+                                    onClick={() => handleButtonClickToComplete(task, dispatch)}
                                     icon={<CheckOutlined  /> }
                                 >
                                     Завершить задачу
@@ -131,7 +146,7 @@ const TaskPage = () => {
                                 <Button
                                     type="primary"
                                     style={{marginLeft: 15, marginTop: 10}}
-                                    onClick={() => handleButtonClick(task, dispatch)}
+                                    onClick={() => handleButtonClickToDelete(task, dispatch)}
                                     icon={<DeleteOutlined /> }
                                 >
                                     Удалить задачу

@@ -37,7 +37,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
 
     const updateTask = () => {
         taskService.updateTask({ ...task,
-            "title": title || "",
+            "title": title || "Нет имени",
             "description": description || "",
             "deadline": (deadline ? deadline.format("YYYY-MM-DD HH:mm:ss") : "2026-12-31 00:00:00" ),
             "category": {

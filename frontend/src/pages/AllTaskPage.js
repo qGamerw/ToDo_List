@@ -36,8 +36,24 @@ const AllTaskPage = () => {
         setDrawerVisible(false); // Закрыть Drawer
     }
 
+    const today = new Date();
+
+    const weekDays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+
+    const dayOfWeek = weekDays[today.getDay()];
+    const day = today.getDate();
+    const month = months[today.getMonth()];
+
+    const countComplete = filteredProducts.filter(item => item.status.name === "EXECUTED").length;
+    const countAll = filteredProducts.length;
+
     return (
         <div>
+            <Meta title="Сегодняшняя дата " description={dayOfWeek + ', ' + day + ' ' + month}/><br/>
+            {countAll > 0 ? <Meta title="Статистика выполнения заданий"
+                                  description={`Выполнено ${countComplete} из ${countAll} задач`} />: null}<br/>
+
             <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 40}}>
                 <Input.Search size="text"
                               value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}

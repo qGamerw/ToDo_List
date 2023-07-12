@@ -55,7 +55,7 @@ const LoginPage = () => {
             };
             handleButtonClick();
 
-            navigate("/users")
+            // navigate("/users")
         })
     };
 
@@ -110,7 +110,7 @@ const LoginPage = () => {
                     Войти
                 </Button>
 
-                <Button type="link" htmlType="button" onClick={() => {navigate("/register")}}>
+                <Button type="link" htmlType="button" onClick={() => {navigate("/api/auth/signup")}}>
                     Регистрация
                 </Button>
             </Form.Item>

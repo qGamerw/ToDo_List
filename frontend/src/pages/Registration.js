@@ -44,7 +44,7 @@ const RegistrationPage = () => {
 
         const handleButtonClick = () => {
             setTimeout(() => {
-                message.success('Приветствую, юный cum-ван!', 3);
+                message.success('Приветствую, ***!', 3);
             }, 100);
         };
         handleButtonClick();
@@ -120,7 +120,7 @@ const RegistrationPage = () => {
                     Зарегистрироваться
                 </Button>
 
-                <Button type="link" htmlType="button" onClick={() => {navigate("/")}}>
+                <Button type="link" htmlType="button" onClick={() => {navigate("/api/auth/signin")}}>
                     Войти
                 </Button>
 

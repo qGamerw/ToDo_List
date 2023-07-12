@@ -37,7 +37,7 @@ const CreateTask = ({categoryId, drawerVisible}) => {
 
     const createTask = () => {
         tasksService.createTaskInCategory({
-            "title": title || "",
+            "title": title || "Нет имени",
             "description": description || "",
             "deadline": (deadline ? deadline.format("YYYY-MM-DD HH:mm:ss") : "2026-12-31 00:00:00" ),
             "category": {
