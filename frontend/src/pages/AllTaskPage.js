@@ -14,16 +14,18 @@ const AllTaskPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [drawerVisible, setDrawerVisible] = useState(false);
+    const [status, setStatus] = useState('');
+    const statusRepository = useSelector((state) => state.status.status);
 
 
     useEffect(() => {
         taskService.getAllTask(dispatch);
-    }, []);
+    }, [dispatch, status]);
 
     useEffect(() => {
-        const filtered = tasks.filter(tasks => tasks.title.toLowerCase().includes(searchTerm.toLowerCase())
-            || tasks.description.toLowerCase().includes(searchTerm.toLowerCase()))
-            || tasks.deadline.includes(searchTerm.toLowerCase());
+        const filtered = tasks.filter(tasks => (status === "all" || tasks.status.id === status)
+            && ( tasks.title.toLowerCase().includes(searchTerm.toLowerCase())
+                || tasks.description.toLowerCase().includes(searchTerm.toLowerCase())) );
         setFilteredProducts(filtered);
     }, [searchTerm, tasks]);
 
@@ -53,6 +55,18 @@ const AllTaskPage = () => {
             <Meta title="Сегодняшняя дата " description={dayOfWeek + ', ' + day + ' ' + month}/><br/>
             {countAll > 0 ? <Meta title="Статистика выполнения заданий"
                                   description={`Выполнено ${countComplete} из ${countAll} задач`} />: null}<br/>
+
+            <Select style={{marginLeft: 10, width: 150}} onChange={(e) => setStatus(e)}>
+                <Select.Option key="all" value="all">
+                    All
+                </Select.Option>
+
+                {statusRepository.map((status) => (
+                    <Select.Option key={status.id} value={status.id}>
+                        {status.name}
+                    </Select.Option>
+                ))}
+            </Select>
 
             <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 40}}>
                 <Input.Search size="text"
