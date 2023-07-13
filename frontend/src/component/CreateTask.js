@@ -66,7 +66,7 @@ const CreateTask = ({categoryId, drawerVisible}) => {
                 Создать задачу
             </Button>
             <Drawer
-                title="Редактирование задачи"
+                title="Создание задачи"
                 width={720}
                 onClose={onClose}
                 open={open}

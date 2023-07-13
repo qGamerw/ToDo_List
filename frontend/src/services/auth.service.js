@@ -2,7 +2,6 @@ import axios from "axios";
 
 const API_URL_CART = "/api/auth/"
 const register = (registration) => {
-
     return axios.post(API_URL_CART + "signup", registration);
 };
 

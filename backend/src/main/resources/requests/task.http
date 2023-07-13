@@ -1,6 +1,6 @@
 # создание задачи
 POST http://localhost:8080/task
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZnNkZmtvcG91aSIsImlhdCI6MTY4OTA1Nzk2NywiZXhwIjoxNjg5MTQ0MzY3fQ.O5HEWvrj5wmLbE9E2aiDnqGgxce_p1zFe86bjTv2MtM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZmRzdm83IiwiaWF0IjoxNjg5MTkyNzMzLCJleHAiOjE2ODkyNzkxMzN9.A0EKAhn-0NAA4d8w5sdOUWDfOwAZYEyzycsybw3Y3S4
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
   "description": "565jj6",
   "deadline": "2020-12-20 12:12:01",
   "category": {
-    "id": 24
+    "id": 11
   },
   "status": {
     "id": 1
@@ -66,6 +66,12 @@ Content-Type: application/json
 {
   "id": 1
 }
+
+###
+# получить задачи по архиву
+GET http://localhost:8080/task/archive
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZmRzdm83IiwiaWF0IjoxNjg5MTkyNzMzLCJleHAiOjE2ODkyNzkxMzN9.A0EKAhn-0NAA4d8w5sdOUWDfOwAZYEyzycsybw3Y3S4
+Accept: application/json
 
 ###
 # удалять задачу по пользователю

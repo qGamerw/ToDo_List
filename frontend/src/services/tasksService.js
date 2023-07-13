@@ -37,6 +37,23 @@ const getTaskByCategoryId = (categoryId, dispatch) => {
         });
 };
 
+const getTaskByArchive = (dispatch) => {
+    return axios.get(`/task/archive`, { headers: authHeader() }).then(
+        (response) => {
+            dispatch(set(response.data));
+            console.log(response.data);
+        },
+        (error) => {
+            const _content = (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+
+            console.error(_content)
+
+            dispatch(set([]));
+        });
+};
+
 const createTaskInCategory = (task, dispatch) => {
     console.log(task);
 
@@ -87,6 +104,7 @@ const tasksService = {
     updateTask,
     deleteTask,
     createTaskInCategory,
+    getTaskByArchive,
 };
 
 export default tasksService

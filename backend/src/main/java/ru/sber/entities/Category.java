@@ -24,4 +24,10 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Category(long id, String name, User user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
 }

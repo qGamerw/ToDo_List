@@ -18,5 +18,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByCategoryUser_IdAndStatus_Id(long userId, long statusId);
 
-    boolean deleteAllByCategory_Id(long id);
+    void deleteAllByCategoryId(long id);
+
+    List<Task> findByCategoryNameAndCategory_User_Id(String categoryName, long statusId);
 }

@@ -1,5 +1,6 @@
 package ru.sber.services;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import ru.sber.entities.User;
 import ru.sber.exceptions.NoFoundUserException;
 import ru.sber.model.LimitCategory;
 import ru.sber.repositories.CategoryRepository;
+import ru.sber.repositories.TaskRepository;
 import ru.sber.security.services.UserDetailsImpl;
 
 import java.util.List;
@@ -16,9 +18,11 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final TaskRepository taskRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, TaskRepository taskRepository) {
         this.categoryRepository = categoryRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -45,8 +49,11 @@ public class CategoryServiceImpl implements CategoryService {
         return new LimitCategory(categoryRepository.findById(id));
     }
 
+    @Transactional
     @Override
     public boolean deleteCategoryById(long id) {
+
+        taskRepository.deleteAllByCategoryId(id);
         categoryRepository.deleteById(id);
 
         return true;

@@ -2,6 +2,8 @@ import {Button, Form, Input, message, Select,} from 'antd';
 import authService from "../services/auth.service";
 import {useNavigate} from "react-router-dom";
 import {LockOutlined, MailOutlined, UserOutlined} from "@ant-design/icons";
+import {login} from "../slices/authSlice";
+import {useDispatch} from "react-redux";
 
 const {} = Select;
 
@@ -39,15 +41,32 @@ const tailFormItemLayout = {
 const RegistrationPage = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    const onFinish = (values) => {
-        authService.register(values)
+    const dispatch = useDispatch();
 
-        const handleButtonClick = () => {
-            setTimeout(() => {
-                message.success('Приветствую, ***!', 3);
-            }, 100);
-        };
-        handleButtonClick();
+    const onFinish = async (values) => {
+        try {
+            await authService.register(values);
+
+            await authService.login(values).then((user) => {
+                    dispatch(login(user));
+                    navigate("/all-task");
+                },
+                (error) => {
+                    message.error("Данные введены неверно");
+                    const _content = (error.response && error.response.data) ||
+                        error.message ||
+                        error.toString();
+                    console.error(_content)
+                });
+        } catch (error) {
+            console.log(error);
+            const handleButtonClick = () => {
+                setTimeout(() => {
+                    message.success('Зачем ты вводишь занятые логины ?!', 3);
+                }, 100);
+            };
+            handleButtonClick();
+        }
     };
 
     return (
@@ -93,7 +112,7 @@ const RegistrationPage = () => {
                     },
                 ]}
             >
-                <Input prefix={<MailOutlined  className="site-form-item-icon"/>}
+                <Input prefix={<MailOutlined className="site-form-item-icon"/>}
                        placeholder="E-mail"
                 />
             </Form.Item>
@@ -109,7 +128,7 @@ const RegistrationPage = () => {
                 ]}
                 hasFeedback
             >
-                <Input
+                <Input.Password
                     prefix={<LockOutlined className="site-form-item-icon"/>}
                     placeholder="Password"
                 />
@@ -119,11 +138,6 @@ const RegistrationPage = () => {
                 <Button type="primary" htmlType="submit">
                     Зарегистрироваться
                 </Button>
-
-                <Button type="link" htmlType="button" onClick={() => {navigate("/api/auth/signin")}}>
-                    Войти
-                </Button>
-
             </Form.Item>
         </Form>
     );

@@ -1,256 +1,10 @@
 import './App.css';
-// import {LogoutOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined,} from '@ant-design/icons';
-// import React, {useEffect, useState} from "react";
-// import {useDispatch, useSelector} from "react-redux";
-// import {Button, Card, Col, Input, Layout, Menu, message, theme} from "antd";
-// import {useNavigate} from "react-router-dom";
-// import authService from "./services/auth.service";
-// import {logout} from "./slices/authSlice";
-// import categoriesService from "./services/categoriesService";
-// import logo from "./imgs/products.jpg";
-// import Meta from "antd/es/card/Meta";
-// const {
-//     Header,
-//     Sider,
-//     Content
-// } = Layout;
-// const App = () => {
-//     const [collapsed, setCollapsed] = useState(false);
-//
-//     const isLoginIn = useSelector((state) => state.auth.isLoggedIn);
-//     const user = useSelector((state) => state.auth.user);
-//     const dispatch = useDispatch();
-//     const navigate = useNavigate();
-//
-//     let isAdmin = false;
-//
-//     if (isLoginIn && user.roles[0] === "ROLE_ADMIN") {
-//         isAdmin = true;
-//     }
-//
-//     const {
-//         token: {colorBgContainer},
-//     } = theme.useToken();
-//
-//     const allProducts = useSelector((state) => state.categories.categories);
-//
-//     useEffect(() => {
-//         categoriesService.getCategories(dispatch);
-//     }, []);
-//
-//     const handleLogOut = () => {
-//         dispatch(logout(user));
-//         authService.logout();
-//         isAdmin = false;
-//         navigate("/")
-//
-//         const handleButtonClick = () => {
-//             setTimeout(() => {
-//                 message.success('Ты успешно покинул тайное место!', 3);
-//             }, 100);
-//         };
-//         handleButtonClick();
-//         navigate("/")
-//     }
-//
-//     function getItem(label, key, icon, children, type) {
-//         return {
-//             key,
-//             icon,
-//             children,
-//             label,
-//             type,
-//         };
-//     }
-//
-//     const ff = () => {
-//         return allProducts.map(item => {
-//             return (
-//                 {
-//                     label: item.name,
-//                     key: item.id+1
-//                 }
-//             );
-//         });
-//     }
-//
-//     const items = [
-//         getItem('Profile', 'profile', <UserOutlined/>),
-//         getItem('Category', 'category', <MailOutlined/>, [
-//             getItem('Home', null, null, [ff()], 'group'),
-//
-//         ]),
-//         getItem('Create category', 'create_catalog', <MailOutlined/>),
-//     ];
-//
-//     return (
-//         <Layout className="App">
-//             <Sider trigger={null} collapsible collapsed={collapsed}>
-//                 <div className="demo-logo-vertical"/>
-//
-//                 <Menu
-//                     theme="dark"
-//                     mode="inline"
-//                     defaultSelectedKeys={['2']}
-//                     style={{
-//                         fontSize: '14px',
-//                     }}
-//                     items={items}
-//                 />
-//             </Sider>
-//             <Layout>
-//                 <Header
-//                     style={{
-//                         padding: 0,
-//                         background: colorBgContainer,
-//                     }}
-//                 >
-//                     <Button
-//                         type="text"
-//                         icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-//                         onClick={() => setCollapsed(!collapsed)}
-//                         style={{
-//                             fontSize: '32px',
-//                             width: 64,
-//                             height: 64,
-//                         }}/>
-//
-//                     <Button
-//                         type="primary"
-//                         icon={<LogoutOutlined/>}
-//                         onClick={handleLogOut}
-//                         style={{
-//                             fontSize: '16px',
-//                             width: 96,
-//                             height: 35,
-//                             float: "right",
-//                             marginRight: 10,
-//                             marginTop: 10,
-//                             display: isLoginIn ? "block" : "none"
-//                         }}
-//                     >
-//                         Выйти
-//                     </Button>
-//                 </Header>
-//                 <Content
-//                     style={{
-//                         margin: '24px 16px',
-//                         padding: 24,
-//                         minHeight: '100vh',
-//                         background: colorBgContainer,
-//                     }}
-//                 >
-//                     {/*<Routes>*/}
-//                     {/*    <Route index element={<LoginPage/>}/>*/}
-//                     {/*    <Route path="/users" element={<ClientPage/>}/>*/}
-//                     {/*    /!*<Route path="/setting-products" element={<SettingProducts/>}/>*!/*/}
-//                     {/*    /!*<Route path="/product" element={<LoginPage/>}/>*!/*/}
-//                     {/*    <Route path="/register" element={<RegistrationPage/>}/>*/}
-//                     {/*    <Route path="*" element={<NotFoundPage/>}/>*/}
-//                     {/*</Routes>*/}
-//                 </Content>
-//             </Layout>
-//         </Layout>
-//     )
-// };
-//
-// import {MailOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
-// import {Menu} from 'antd';
-// import {useEffect} from "react";
-// import {useDispatch, useSelector} from "react-redux";
-// import categoriesService from "./services/categoriesService";
-// import {Route, Routes, useNavigate} from "react-router-dom";
-// import LoginPage from "./pages/LoginPage";
-// import RegistrationPage from "./pages/Registration";
-// import {NotFoundPage} from "./pages/NotFoundPage";
-// import SettingProducts from "./pages/SettingProductPage";
-// import ClientPage from "./pages/ClientPage";
-//
-//
-// function getItem(label, key, icon, children, type) {
-//     return {
-//         key,
-//         icon,
-//         children,
-//         label,
-//         type,
-//     };
-// }
-//
-// const App1 = () => {
-//     const dispatch = useDispatch();
-//     const navigate = useNavigate();
-//     const allProducts = useSelector((state) => state.categories.categories);
-//     const isLoginIn = useSelector((state) => state.auth.isLoggedIn);
-//
-//     useEffect(() => {
-//         categoriesService.getCategories(dispatch);
-//     }, []);
-//
-//     const onClick = (e) => {
-//
-//         if (e.key === "profile") {
-//             console.log('click', e);
-//             navigate("/")
-//         } else if (e.key === "create_catalog") {
-//             console.log('click', e);
-//             navigate("/")
-//         }
-//     };
-//     const getUserCategory = () => {
-//         return allProducts.map(item => {
-//             return (
-//                 {
-//                     key: item.id,
-//                     icon: <SettingOutlined/>,
-//                     children: null,
-//                     label: item.name,
-//                 }
-//             );
-//         });
-//     }
-//
-//     const items = [
-//         getItem('Profile', 'profile', <UserOutlined/>),
-//         getItem('Категории', 'category', <MailOutlined/>, [
-//             getItem('Личное', null, null, [
-//                 getItem('Дом', '1.01'),
-//                 getItem('Семья', '2.01'),
-//                 getItem('Досуг', '3.01')
-//             ], 'group'),
-//             getItem('Работа', null, null, [
-//                 getItem('Дела до работы', '1.01'),
-//                 getItem('На работе', '2.01'),
-//                 getItem('После работе', '3.01')
-//             ], 'group'),
-//             getItem('Пользовательские группы', null, null, [...getUserCategory()], 'group'),
-//         ]),
-//         getItem('Создать категорию', 'create_catalog', <MailOutlined/>),
-//     ];
-//
-//     return (
-//         <>
-//             <Menu
-//                 onClick={onClick}
-//                 style={{
-//                     width: 256,
-//                     height: 1000
-//                 }}
-//                 mode="vertical"
-//                 items={items}
-//                 theme={'dark'}
-//             />
-//
-//             { isLoginIn? <LoginPage/> : <LoginPage/> }
-//
-//
-//         </>
-//     )
-// }
 import {
     AppstoreAddOutlined,
-    CalendarOutlined,
+    AppstoreOutlined,
     CheckCircleOutlined,
+    LoginOutlined,
+    LogoutOutlined,
     RestOutlined,
     UserOutlined
 } from '@ant-design/icons';
@@ -268,7 +22,8 @@ import AllTaskPage from "./pages/AllTaskPage";
 import TaskPage from "./pages/TaskPage";
 import statusService from "./services/statusService";
 import priorityService from "./services/priorityService";
-
+import ClientPage from "./pages/ClientPage";
+import ArchivePage from "./pages/ArchivePage";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -308,7 +63,7 @@ const App = () => {
     }
 
     const getUserCategory = () => {
-        return userCategory.map(item => {
+        return userCategory.filter(item => item.name !== "Архив").map(item => {
             return (
                 {
                     key: item.id,
@@ -322,10 +77,11 @@ const App = () => {
     const items = [
         (isLoginIn ? getItem('Профиль', 'profile', <UserOutlined/>) : null),
         (isLoginIn ? getItem('Все задачи', 'all-task-category', <CheckCircleOutlined/>) : null),
-        (isLoginIn ? getItem('Категории', 'category', <CalendarOutlined/>, [...getUserCategory(),
-            getItem('Создать категорию', 'create_catalog', <AppstoreAddOutlined/>)],) : null),
+        (isLoginIn ? getItem('Категории', 'category', <AppstoreOutlined/>, [...getUserCategory(),
+            getItem('Создать', 'create_catalog', <AppstoreAddOutlined/>)],) : null),
         (isLoginIn ? getItem('Архив', 'all-task', <RestOutlined/>) : null),
-        getItem((isLoginIn ? 'Выйти' : "Войти"), 'sign', <AppstoreAddOutlined/>),
+        (isLoginIn ? getItem('Выйти', 'sign', <LogoutOutlined/>) :
+            getItem('Войти', 'sign', <LoginOutlined/>)),
     ];
 
     const {
@@ -346,6 +102,7 @@ const App = () => {
             } else {
                 dispatch(logout(user));
                 authService.logout();
+                navigate("/api/auth/signin")
             }
         } else if (e.keyPath[1] === "category") {
             console.log('click', e);
@@ -369,6 +126,7 @@ const App = () => {
     };
 
     return (
+
         <Layout
             style={{
                 minHeight: '100vh',
@@ -377,7 +135,7 @@ const App = () => {
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div className="demo-logo-vertical"/>
                 <Menu theme="dark"
-                      defaultSelectedKeys={['1']}
+                      defaultSelectedKeys={['2']}
                       mode="inline"
                       items={items}
                       onClick={onClick}
@@ -405,12 +163,13 @@ const App = () => {
                         }}
                     >
                         <Routes>
-                            {/*<Route index element={<LoginPage/>}/>*/}
+                            <Route index element={<AllTaskPage/>}/>
                             <Route path="/api/auth/signin" element={<LoginPage/>}/>
                             <Route path="/api/auth/signup" element={<RegistrationPage/>}/>
                             <Route path="/all-task" element={<AllTaskPage/>}/>
                             <Route path="/category/*" element={<TaskPage/>}/>
-                            <Route path="/archive" element={<AllTaskPage/>}/>
+                            <Route path="/archive" element={<ArchivePage/>}/>
+                            <Route path="/user" element={<ClientPage/>}/>
 
                             <Route path="*" element={<NotFoundPage/>}/>
 
@@ -431,7 +190,8 @@ const App = () => {
                         ]}
                     >
                         <Form form={form} onFinish={onFinish}>
-                            <Form.Item name="name" label="Имя" rules={[{required: true, message: 'Введите имя'}]}>
+                            <Form.Item name="name" label="Название категории"
+                                       rules={[{required: true, message: 'Введите имя'}]}>
                                 <Input/>
                             </Form.Item>
                         </Form>
@@ -448,6 +208,7 @@ const App = () => {
                 </Footer>
             </Layout>
         </Layout>
+
     );
 };
 

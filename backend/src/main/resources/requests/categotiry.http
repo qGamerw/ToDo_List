@@ -16,12 +16,12 @@ Accept: application/json
 
 ###
 # получать категорию по id
-GET http://localhost:8080/category/12
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZnNkZmtvcG91aSIsImlhdCI6MTY4OTA1OTQxMiwiZXhwIjoxNjg5MTQ1ODEyfQ.jedqk9nkTH27NZVX5FAT0sYtebwaOS9ZQpKcbE46dU0
+GET http://localhost:8080/category/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZGZzZGYzMjRzZiIsImlhdCI6MTY4OTE3NDY0NSwiZXhwIjoxNjg5MjYxMDQ1fQ.nCcE7YDepp4u3Vx2q0C6sBHFSJSlPl08rOwoMKn2u5M
 Accept: application/json
 
 ###
 # удалить категорию по id
-DELETE http://localhost:8080/category/12
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZnNkZmtvcG91aSIsImlhdCI6MTY4OTA1OTQxMiwiZXhwIjoxNjg5MTQ1ODEyfQ.jedqk9nkTH27NZVX5FAT0sYtebwaOS9ZQpKcbE46dU0
+DELETE http://localhost:8080/category/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZGZzZGYzMjRzZiIsImlhdCI6MTY4OTE3NDY0NSwiZXhwIjoxNjg5MjYxMDQ1fQ.nCcE7YDepp4u3Vx2q0C6sBHFSJSlPl08rOwoMKn2u5M
 Accept: application/json

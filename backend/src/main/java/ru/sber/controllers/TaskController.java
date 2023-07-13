@@ -84,6 +84,17 @@ public class TaskController {
                 .body(listTask);
     }
 
+    @GetMapping("/archive")
+    public ResponseEntity<List<LimitTask>> getListTaskByArchive() {
+        log.info("Получает задачи по пользователю");
+
+        List<LimitTask> listTask = taskService.getListTaskByArchive();
+
+        return ResponseEntity
+                .ok()
+                .body(listTask);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTaskById(@PathVariable long id) {
         log.info("Удаление задачи id {}", id);

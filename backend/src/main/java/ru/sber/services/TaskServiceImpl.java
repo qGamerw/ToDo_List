@@ -91,4 +91,12 @@ public class TaskServiceImpl implements TaskService {
                 .map(LimitTask::new)
                 .toList();
     }
+
+    @Override
+    public List<LimitTask> getListTaskByArchive() {
+        return taskRepository.findByCategoryNameAndCategory_User_Id("Архив", getUserId())
+                .stream()
+                .map(LimitTask::new)
+                .toList();
+    }
 }

@@ -5,6 +5,7 @@ import taskService from "../services/tasksService";
 import Meta from "antd/es/card/Meta";
 import CreateTask from "../component/CreateTask";
 import UpdateTask from "../component/UpdateTask";
+import {CheckOutlined} from "@ant-design/icons";
 
 const {Option} = Select;
 
@@ -14,13 +15,17 @@ const AllTaskPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [drawerVisible, setDrawerVisible] = useState(false);
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('all');
     const statusRepository = useSelector((state) => state.status.status);
+    const tasksRepository = useSelector((state) => state.tasks.tasks);
 
 
     useEffect(() => {
         taskService.getAllTask(dispatch);
     }, [dispatch, status]);
+
+    let countComplete = tasksRepository.filter(item => item.status.name === "EXECUTED").length;
+    let countAll = tasksRepository.length;
 
     useEffect(() => {
         const filtered = tasks.filter(tasks => (status === "all" || tasks.status.id === status)
@@ -47,16 +52,58 @@ const AllTaskPage = () => {
     const day = today.getDate();
     const month = months[today.getMonth()];
 
-    const countComplete = filteredProducts.filter(item => item.status.name === "EXECUTED").length;
-    const countAll = filteredProducts.length;
+    const handleButtonClickToComplete = (task, dispatch) => {
+
+        if (task.status.name !== "EXECUTED") {
+            taskService.updateTask({
+                ...task,
+                "title": task.title,
+                "description": task.description,
+                "deadline": task.deadline,
+                "category": {
+                    "id": task.limitCategory.id
+                },
+                "status": {
+                    "id": 2
+                },
+                "priority": {
+                    "id": task.priority.id
+                },
+                "regularity": {
+                    "id": 1
+                }
+            }, dispatch);
+        } else {
+            taskService.updateTask({
+                ...task,
+                "title": task.title,
+                "description": task.description,
+                "deadline": task.deadline,
+                "category": {
+                    "id": task.limitCategory.id
+                },
+                "status": {
+                    "id": 1
+                },
+                "priority": {
+                    "id": task.priority.id
+                },
+                "regularity": {
+                    "id": 1
+                }
+            }, dispatch);
+        }
+    }
 
     return (
         <div>
-            <Meta title="Сегодняшняя дата " description={dayOfWeek + ', ' + day + ' ' + month}/><br/>
+            <Meta title="Сегодняшняя дата " description={<span
+                style={{fontSize: '20px'}}>{dayOfWeek + ', ' + day + ' ' + month}</span>}/><br/>
             {countAll > 0 ? <Meta title="Статистика выполнения заданий"
-                                  description={`Выполнено ${countComplete} из ${countAll} задач`} />: null}<br/>
+                                  description={<span
+                                      style={{fontSize: '20px'}}>{`Выполнено ${countComplete} из ${countAll} задач`}</span>} />: null}<br/>
 
-            <Select style={{marginLeft: 10, width: 150}} onChange={(e) => setStatus(e)}>
+            <Select defaultValue="all" style={{marginLeft: 10, width: 150}} onChange={(e) => setStatus(e)}>
                 <Select.Option key="all" value="all">
                     All
                 </Select.Option>
@@ -87,19 +134,34 @@ const AllTaskPage = () => {
                                 marginTop: 10
                             }}
                         >
-                            <Meta title="Название" description={task.title}/><br/>
-                            <Meta title="Описание" description={task.description}/><br/>
-                            <Meta title="Срок завершения"
-                                  description={task.deadline}/><br/>
-                            <Meta title="Статус" description={task.status.name}/><br/>
-                            <Meta title="Приоритет" description={task.priority.name}/><br/>
-                            <Meta title="Повторение задачи" description={task.regularity.dateNotify}/><br/>
+                            {"" !== task.title ? <> <Meta title="Название" description={<span style={{ fontSize: '22px' }}>{task.title}</span>}/><br/> </>
+                                : null}
+
+                            {"" !== task.description ? <> <Meta title="Описание" description={<span style={{ fontSize: '20px' }}>{task.description}</span>}/><br/> </>
+                                : null}
+
+                            {"2026-12-31 00:00:00" !== task.deadline ? <> <Meta title="Срок завершения"
+                                                                                description={<span style={{ fontSize: '20px' }}>{task.deadline}</span>}/><br/> </>
+                                : null}
+
+                            <Meta title="Статус" description={<span style={{ fontSize: '20px' }}>{task.status.name}</span>}/><br/>
+                            <Meta title="Приоритет" description={<span style={{ fontSize: '20px' }}>{task.priority.name}</span>}/><br/>
+                            <Meta title="Повторение задачи" description={<span style={{ fontSize: '20px' }}>{task.regularity.dateNotify}</span>}/><br/>
+
+                            <Button
+                                type="primary"
+                                style={{marginLeft: 10, marginTop: 10, marginBottom: 10}}
+                                onClick={() => handleButtonClickToComplete(task, dispatch)}
+                                icon={<CheckOutlined/>}
+                            >
+                                {task.status.name === "EXECUTED" ? "Выполнять работу" : "Завершить задачу"}
+                            </Button>
 
                             <UpdateTask task={task} drawerVisible={drawerVisible} handleDrawerClose={handleDrawerClose}/>
 
                             <Button
                                 type="primary"
-                                style={{marginLeft: 15, marginTop: 10}}
+                                style={{marginLeft: 25, marginTop: 10}}
                                 onClick={() => handleButtonClick(task, dispatch)}
                             >
                                 Удалить задачу

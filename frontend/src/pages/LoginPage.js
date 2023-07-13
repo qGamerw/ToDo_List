@@ -48,14 +48,15 @@ const LoginPage = () => {
             console.log(user)
             dispatch(login(user))
 
-            const handleButtonClick = () => {
-                setTimeout(() => {
-                    message.success('Ооу, ты уже соскучился!', 3);
-                }, 100);
-            };
-            handleButtonClick();
-
-            // navigate("/users")
+            if (user){
+                const handleButtonClick = () => {
+                    setTimeout(() => {
+                        message.success('Ты успешно вошел!', 3);
+                    }, 100);
+                };
+                handleButtonClick();
+                navigate("/all-task");
+            }
         })
     };
 
