@@ -215,6 +215,53 @@ const AllTaskPage = () => {
         };
     }, [arrow]);
 
+    const { Paragraph } = Typography;
+    const handleEnterPressTitle = async (value, task) => {
+        console.log(value);
+        console.log(task);
+        await taskService.updateTask({
+            "id": task.id,
+            "title": value || 'Как же назвать',
+            "description": task.description,
+            "deadline": task.deadline,
+            "category": {
+                "id": task.limitCategory.id
+            },
+            "status": {
+                "id": task.status.id
+            },
+            "priority": {
+                "id": task.priority.id
+            },
+            "regularity": {
+                "id": task.regularity.id
+            }
+        }, dispatch);
+    };
+
+    const handleEnterPressDescription = async (value, task) => {
+        console.log(value);
+        console.log(task);
+        await taskService.updateTask({
+            "id": task.id,
+            "title": task.title,
+            "description": value,
+            "deadline": task.deadline,
+            "category": {
+                "id": task.limitCategory.id
+            },
+            "status": {
+                "id": task.status.id
+            },
+            "priority": {
+                "id": task.priority.id
+            },
+            "regularity": {
+                "id": task.regularity.id
+            }
+        }, dispatch);
+    };
+
     return (
         <div>
             <Text style={{fontSize: '18px', color: 'grey' }} >Сегодняшняя дата</Text><br/>
@@ -309,26 +356,37 @@ const AllTaskPage = () => {
                             </Tooltip>
 
                             <br/><Text style={{fontSize: '18px', color: 'grey' }} >Название</Text><br/>
-                            <Text style={{
-                                textDecoration: task.status.name === "EXECUTED" ? 'line-through' : '',
-                                fontSize: '20px',
-                                color: 'black'
-                            }}>
+
+                            <Paragraph
+                                editable={{
+                                    onChange: (value) => handleEnterPressTitle(value, task),
+                                }}
+                                style={{
+                                    textDecoration: task.status.name === "EXECUTED" ? 'line-through' : '',
+                                    fontSize: '20px',
+                                    color: 'black'}}
+                            >
                                 {task.title}
-                            </Text><br/><br/>
+                            </Paragraph>
 
                             {task.description !== "" ?
                                 <>
                                     <Text style={{fontSize: '18px', color: 'grey' }} >Описание</Text><br/>
-                                    <Text style={{
-                                        textDecoration: task.status.name === "EXECUTED" ? 'line-through' : '',
-                                        fontSize: '20px',
-                                        color: 'black'
-                                    }}>
+
+                                    <Paragraph
+                                        editable={{
+                                            onChange: (value) => handleEnterPressDescription(value, task),
+                                        }}
+                                        style={{
+                                            textDecoration: task.status.name === "EXECUTED" ? 'line-through' : '',
+                                            fontSize: '20px',
+                                            color: 'black'
+                                        }}
+                                    >
                                         {task.description}
-                                    </Text><br/><br/>
+                                    </Paragraph>
                                 </>
-                            : null }
+                                : null }
 
                             <Text style={{fontSize: '18px', color: 'grey' }} >Категория</Text><br/>
                             <Tag color="#f759ab"><span style={{fontSize: '20px'}}>{task.limitCategory.name}</span></Tag><br/><br/>
