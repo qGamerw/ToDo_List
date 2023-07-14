@@ -156,7 +156,7 @@ const CreateTask = ({form, categoryId, drawerVisible}) => {
                                     value={deadline}
                                     onChange={handleDateTimeChange}
                                     format={"YYYY-MM-DD HH:mm:ss"}
-                                    // disabledDate={disabledDate}
+                                    disabledDate={disabledDate}
                                 />
                             </Form.Item>
                         </Col>

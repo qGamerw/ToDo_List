@@ -89,7 +89,7 @@ const AllTaskPage = () => {
     const changeDateToNow = () => {
         const currentTime = new Date();
         tasksRepository.forEach(item => {
-            if (item.status.name !== "EXECUTED") {
+            if (item.status.name !== "EXECUTED" || item.regularity.name === 'NONE') {
                 return;
             }
 
