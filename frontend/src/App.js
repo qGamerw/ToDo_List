@@ -23,7 +23,6 @@ import AllTaskPage from "./pages/AllTaskPage";
 import TaskPage from "./pages/TaskPage";
 import ClientPage from "./pages/ClientPage";
 import ArchivePage from "./pages/ArchivePage";
-import consolimg from "./imgs/avatarjpg.jpg"
 
 const {Header, Content, Footer, Sider} = Layout;
 

@@ -2,10 +2,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Button, Card, Col, Input, Row, Select, Tag, Tooltip, Typography} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/tasksService";
-import Meta from "antd/es/card/Meta";
 import UpdateTask from "../component/UpdateTask";
 import {DeleteOutlined} from "@ant-design/icons";
-import categoriesService from "../services/categoriesService";
 
 const {Option} = Select;
 

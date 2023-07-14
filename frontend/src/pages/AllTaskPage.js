@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Button, Card, Col, Input, message, Row, Select, Tag, Tooltip, Typography} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/tasksService";
-import Meta from "antd/es/card/Meta";
 import UpdateTask from "../component/UpdateTask";
 import {
     CheckOutlined,
@@ -14,7 +13,6 @@ import {
 import statusService from "../services/statusService";
 import priorityService from "../services/priorityService";
 import regularityService from "../services/regularityService";
-import Title from "antd/es/skeleton/Title";
 
 const {Option} = Select;
 

@@ -1,8 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Descriptions, Tag, Typography} from "antd";
+import {Avatar, Typography} from "antd";
 import React from "react";
 import logo from '../imgs/avatarjpg.jpg';
-import TextArea from "antd/es/input/TextArea";
 
 export const Clients = () => {
     const dispatch = useDispatch();

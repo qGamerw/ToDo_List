@@ -1,7 +1,6 @@
 import axios from "axios";
 import {set} from "../slices/taskSlice";
 import authHeader from "./auth-header";
-import {notification} from "antd";
 
 const getAllTask = (dispatch) => {
     return axios.get(`/tasks/user`, { headers: authHeader() }).then(

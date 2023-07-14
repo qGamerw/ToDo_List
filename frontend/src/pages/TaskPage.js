@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Button, Card, Col, Input, message, Row, Select, Tag, Tooltip, Typography} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/tasksService";
-import Meta from "antd/es/card/Meta";
 import UpdateTask from "../component/UpdateTask";
 import {useNavigate, useParams} from 'react-router-dom';
 import {CheckOutlined, CloseCircleOutlined, DeleteOutlined} from "@ant-design/icons";
