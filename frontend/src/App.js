@@ -5,10 +5,11 @@ import {
     CheckCircleOutlined,
     LoginOutlined,
     LogoutOutlined,
+    ProfileOutlined,
     RestOutlined,
     UserOutlined
 } from '@ant-design/icons';
-import {Button, Form, Input, Layout, Menu, Modal, theme} from 'antd';
+import {Button, Form, Input, Layout, Menu, message, Modal, theme, Typography} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Route, Routes, useNavigate} from "react-router-dom";
@@ -20,13 +21,11 @@ import authService from "./services/auth.service";
 import {logout} from "./slices/authSlice";
 import AllTaskPage from "./pages/AllTaskPage";
 import TaskPage from "./pages/TaskPage";
-import statusService from "./services/statusService";
-import priorityService from "./services/priorityService";
 import ClientPage from "./pages/ClientPage";
 import ArchivePage from "./pages/ArchivePage";
+import consolimg from "./imgs/avatarjpg.jpg"
 
 const {Header, Content, Footer, Sider} = Layout;
-
 
 const App = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -37,15 +36,10 @@ const App = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [form] = Form.useForm();
     const user = useSelector((state) => state.auth.user);
-
+    const { Title } = Typography;
     const openModalCreateCategory = () => {
         setModalVisible(true);
     };
-
-    if (isLoginIn) {
-        statusService.getAllStatus(dispatch);
-        priorityService.getAllPriority(dispatch);
-    }
 
     useEffect(() => {
         if (isLoginIn) {
@@ -69,13 +63,14 @@ const App = () => {
                     key: item.id,
                     children: null,
                     label: item.name,
+                    icon: <ProfileOutlined/>
                 }
             );
         });
     }
 
     const items = [
-        (isLoginIn ? getItem('Профиль', 'profile', <UserOutlined/>) : null),
+        (isLoginIn ? getItem(`${user.username}`, 'profile', <UserOutlined/>) : null),
         (isLoginIn ? getItem('Все задачи', 'all-task-category', <CheckCircleOutlined/>) : null),
         (isLoginIn ? getItem('Категории', 'category', <AppstoreOutlined/>, [...getUserCategory(),
             getItem('Создать', 'create_catalog', <AppstoreAddOutlined/>)],) : null),
@@ -120,9 +115,28 @@ const App = () => {
     };
 
     const onFinish = (values) => {
+
+        if (values.name === "Архив"){
+            values = {name: values.name+" 2"}
+        }
+
         categoriesService.createCategory(values, dispatch);
         setModalVisible(false);
         form.resetFields();
+
+        const textList = [
+            "Сбор личной информации вклю... ой!",
+            "Мне нужно больше инфор... всего!",
+            "Очень важно структурировать свои задачи по категориям!",
+            "Так так так, и что ты будешь делать дальше ?!",
+            "Только не говори что ты просто создал категорию чтобы потом ее удалить!"
+        ]
+        const handleButtonClick = () => {
+            setTimeout(() => {
+                message.success(textList[Math.floor(Math.random() * textList.length)], 3);
+            }, 100);
+        };
+        handleButtonClick();
     };
 
     return (
@@ -134,6 +148,10 @@ const App = () => {
         >
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div className="demo-logo-vertical"/>
+
+                {!collapsed ? <Title level={3} style={{ marginLeft: 28, marginTop: 10, marginBottom: 7, color: "white" }} >TDl</Title> :
+                    <Title level={3} style={{ marginLeft: 28, marginTop: 10, marginBottom: 7, color: "white" }} >TDl</Title> }
+
                 <Menu theme="dark"
                       defaultSelectedKeys={['2']}
                       mode="inline"
@@ -142,6 +160,7 @@ const App = () => {
                       onCancel={() => setModalVisible(false)}
                 />
             </Sider>
+
             <Layout>
                 <Header
                     style={{
@@ -149,6 +168,7 @@ const App = () => {
                         background: colorBgContainer,
                     }}
                 />
+
                 <Content
                     style={{
                         margin: '0 16px',
@@ -208,7 +228,6 @@ const App = () => {
                 </Footer>
             </Layout>
         </Layout>
-
     );
 };
 

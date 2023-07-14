@@ -1,9 +1,9 @@
 import axios from "axios";
-import {set} from "../slices/prioritySlice";
+import {set} from "../slices/regularitySlice";
 import authHeader from "./auth-header";
 
-const getAllPriority = (dispatch) => {
-    return axios.get(`/priorities`, { headers: authHeader() }).then(
+const getAllRegularity = (dispatch) => {
+    return axios.get(`/regularities`, { headers: authHeader() }).then(
         (response) => {
             dispatch(set(response.data));
             console.log(response.data);
@@ -19,8 +19,8 @@ const getAllPriority = (dispatch) => {
         });
 };
 
-const priorityService = {
-    getAllPriority,
+const regularityService = {
+    getAllRegularity,
 };
 
-export default priorityService
+export default regularityService

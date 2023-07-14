@@ -13,12 +13,12 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * Класс для взаимодействия с задачей
+ * Класс для взаимодействия со статусом
  */
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("status")
+@RequestMapping("statuses")
 public class StatusController {
     private final StatusService statusService;
 
@@ -27,14 +27,14 @@ public class StatusController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Status>> getListTaskByCategoryId() {
+    public ResponseEntity<List<Status>> getListStatus() {
         log.info("Получает все статусы" );
 
-        List<Status> listCategory = statusService.getStatus();
+        List<Status> statusList = statusService.getStatus();
 
         return ResponseEntity
                 .ok()
-                .body(listCategory);
+                .body(statusList);
     }
 
 

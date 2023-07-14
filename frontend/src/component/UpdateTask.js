@@ -1,10 +1,11 @@
-import {EditOutlined, PlusOutlined} from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
-import { useState } from 'react';
+import {EditOutlined} from '@ant-design/icons';
+import {Button, Col, DatePicker, Drawer, Form, Input, message, Row, Select, Space, Tooltip} from 'antd';
+import React, {useMemo, useState} from 'react';
 import taskService from "../services/tasksService";
 import {useDispatch, useSelector} from "react-redux";
 import dayjs from "dayjs";
 import moment from "moment";
+
 const { Option } = Select;
 
 const UpdateTask = ({ task, drawerVisible }) => {
@@ -17,9 +18,11 @@ const UpdateTask = ({ task, drawerVisible }) => {
     const [regularity, setRegularity] = useState('');
     const [deadline, setDateTime] = useState(null);
     const [category, setCategory] = useState("");
+    const [arrow, setArrow] = useState('Show');
 
     const statusRepository = useSelector((state) => state.status.status);
     const priorityRepository = useSelector((state) => state.priority.priority);
+    const regularityRepository = useSelector((state) => state.regularity.regularity);
     const userCategory = useSelector((state) => state.categories.categories);
 
     const showDrawer = () => {
@@ -34,25 +37,11 @@ const UpdateTask = ({ task, drawerVisible }) => {
         setOpen(false);
     };
 
-
     const handleDateTimeChange = (value) => {
         setDateTime(value);
     };
 
     const updateTask = () => {
-        console.log("title " + title)
-        console.log("description " + description)
-        console.log("deadline " + deadline)
-        console.log("category " + category)
-        console.log("category2 " + task.limitCategory.id)
-        console.log("status " + status)
-        console.log("priority " + priority)
-        console.log("regularity " + regularity)
-        console.log("userCategory " + userCategory)
-
-
-        console.log("123 " + task.title)
-
         taskService.updateTask({ ...task,
             "title": title || task.title,
             "description": description || task.description,
@@ -67,21 +56,49 @@ const UpdateTask = ({ task, drawerVisible }) => {
                 "id": priority || task.priority.id
             },
             "regularity": {
-                "id": 1
+                "id": regularity || 1
             }
         }, dispatch);
         setOpen(false);
+
+        const textList = [
+            "Задача обновлена, отголоски новых идей уже пронизывают весь список!",
+            "Вдохновение в действии: задача обновлена, цели становятся более ясными",
+            "Задача преобразилась, теперь она красива, как веселый клоун!",
+            "Версия 2.0: задача обновлена, результаты станут еще лучше!",
+        ]
+        const handleButtonClick = () => {
+            setTimeout(() => {
+                message.success(textList[Math.floor(Math.random() * textList.length)], 3);
+            }, 100);
+        };
+        handleButtonClick();
     };
 
     const disabledDate = (current) => {
         return current && current < dayjs().endOf('day');
     };
 
+    const mergedArrow = useMemo(() => {
+        if (arrow === 'Hide') {
+            return false;
+        }
+        if (arrow === 'Show') {
+            return true;
+        }
+        return {
+            pointAtCenter: true,
+        };
+    }, [arrow]);
+
     return (
         <>
-            <Button type="primary" onClick={showDrawer} icon={<EditOutlined />}>
-                Редактировать задачу
-            </Button>
+            <Tooltip placement="top" title="Редактировать задачу" arrow={mergedArrow}>
+                <Button type="primary" onClick={showDrawer} icon={<EditOutlined />} >
+
+                </Button>
+            </Tooltip>
+
             <Drawer
                 title="Редактирование задачи"
                 width={720}
@@ -151,7 +168,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
                                 name="status"
                                 label="Статус"
                             >
-                                <Select defaultValue={task.status.id} placeholder="Введите статус задачи" onChange={(e) => setStatus(e)} >
+                                <Select value={task.status.id} placeholder="Введите статус задачи" onChange={(e) => setStatus(e)} >
                                     {statusRepository.map((status) => (
                                         <Select.Option key={status.id} value={status.id}>
                                             {status.name}
@@ -168,7 +185,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
                                 name="priority"
                                 label="Приоритет"
                             >
-                                <Select defaultValue={task.priority.id} placeholder="Введите приоритет задачи" onChange={(e) => setPriority(e)} >
+                                <Select value={task.priority.id} placeholder="Введите приоритет задачи" onChange={(e) => setPriority(e)} >
                                     {priorityRepository.map((priority) => (
                                         <Select.Option key={priority.id} value={priority.id}>
                                             {priority.name}
@@ -180,11 +197,14 @@ const UpdateTask = ({ task, drawerVisible }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="regularity"
-                                label="Regularity"
+                                label="Регулярность"
                             >
-                                <Select placeholder="Please choose the approver">
-                                    <Option value="jack">Jack Ma</Option>
-                                    <Option value="tom">Tom Liu</Option>
+                                <Select value={task.regularity.id} placeholder="Введите регулярность задачи" onChange={(e) => setRegularity(e)} >
+                                    {regularityRepository.map((regularity) => (
+                                        <Select.Option key={regularity.id} value={regularity.id}>
+                                            {regularity.name}
+                                        </Select.Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -196,7 +216,7 @@ const UpdateTask = ({ task, drawerVisible }) => {
                                 name="category"
                                 label="Категория"
                             >
-                                <Select defaultValue={task.limitCategory.id} placeholder="Введите категорию" onChange={(e) => setCategory(e)} >
+                                <Select value={task.limitCategory.id} placeholder="Введите категорию" onChange={(e) => setCategory(e)} >
                                     {userCategory.map((category) => (
                                         <Select.Option key={category.id} value={category.id}>
                                             {category.name}

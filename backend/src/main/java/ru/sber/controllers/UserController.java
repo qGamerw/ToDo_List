@@ -14,7 +14,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("users")
+@RequestMapping("userses")
 public class UserController {
     private final UserService userService;
 

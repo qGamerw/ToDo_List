@@ -1,4 +1,4 @@
-import {LockOutlined, MailOutlined, UserOutlined} from '@ant-design/icons';
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Form, Input, message, Select} from 'antd';
 import {login} from "../slices/authSlice";
 import {useDispatch} from "react-redux";
@@ -51,7 +51,7 @@ const LoginPage = () => {
             if (user){
                 const handleButtonClick = () => {
                     setTimeout(() => {
-                        message.success('Ты успешно вошел!', 3);
+                        message.success('Я надеюсь, что ты выполнишь хотя бы одну задачу!', 3);
                     }, 100);
                 };
                 handleButtonClick();
@@ -70,7 +70,8 @@ const LoginPage = () => {
             style={{
                 padding: '20px 50px',
                 width: '30%',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                minWidth: 400
             }}
             scrollToFirstError
         >
@@ -100,7 +101,7 @@ const LoginPage = () => {
                 ]}
                 hasFeedback
             >
-                <Input
+                <Input.Password
                     prefix={<LockOutlined className="site-form-item-icon"/>}
                     placeholder="Password"
                 />

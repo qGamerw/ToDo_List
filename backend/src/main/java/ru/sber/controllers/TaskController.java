@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("task")
+@RequestMapping("tasks")
 public class TaskController {
     private final TaskService taskService;
 

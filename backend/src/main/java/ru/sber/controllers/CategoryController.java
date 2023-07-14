@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("category")
+@RequestMapping("categories")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -57,7 +57,7 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoryById(@PathVariable long id) {
-        log.info("Получает категории по id");
+        log.info("Удаляет категорию по id");
 
         boolean isCategory = categoryService.deleteCategoryById(id);
 

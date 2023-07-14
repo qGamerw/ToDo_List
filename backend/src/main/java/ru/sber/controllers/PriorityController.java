@@ -12,12 +12,12 @@ import ru.sber.services.PriorityService;
 import java.util.List;
 
 /**
- * Класс для взаимодействия с задачей
+ * Класс для взаимодействия с приоритетами
  */
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("priority")
+@RequestMapping("priorities")
 public class PriorityController {
     private final PriorityService priorityService;
 
@@ -26,13 +26,13 @@ public class PriorityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Priority>> getListTaskByCategoryId() {
-        log.info("Получает все статусы");
+    public ResponseEntity<List<Priority>> getListPriority() {
+        log.info("Получает все приоритеты");
 
-        List<Priority> listCategory = priorityService.getPriority();
+        List<Priority> priorityList = priorityService.getPriority();
 
         return ResponseEntity
                 .ok()
-                .body(listCategory);
+                .body(priorityList);
     }
 }

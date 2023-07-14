@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {LockOutlined, MailOutlined, UserOutlined} from "@ant-design/icons";
 import {login} from "../slices/authSlice";
 import {useDispatch} from "react-redux";
+import categoriesService from "../services/categoriesService";
 
 const {} = Select;
 
@@ -50,6 +51,7 @@ const RegistrationPage = () => {
             await authService.login(values).then((user) => {
                     dispatch(login(user));
                     navigate("/all-task");
+                    categoriesService.getCategories(dispatch);
                 },
                 (error) => {
                     message.error("Данные введены неверно");
@@ -79,7 +81,8 @@ const RegistrationPage = () => {
             style={{
                 padding: '20px 50px',
                 width: '30%',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                minWidth: 400
             }}
             scrollToFirstError
         >

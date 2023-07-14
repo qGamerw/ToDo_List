@@ -21,6 +21,15 @@ values ('MEDIUM');
 insert into ukhinms.priorities (name)
 values ('HIGH');
 
-insert into ukhinms.regularities (date_notify)
-values ('2020-12-20 12:12:01');
+insert into ukhinms.regularities (name)
+values ('NONE');
+insert into ukhinms.regularities (name)
+values ('DAILY');
+insert into ukhinms.regularities (name)
+values ('ONCE');
+insert into ukhinms.regularities (name)
+values ('WEEKLY');
+insert into ukhinms.regularities (name)
+values ('MONTHLY');
+
 

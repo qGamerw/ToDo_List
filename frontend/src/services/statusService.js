@@ -1,10 +1,9 @@
 import axios from "axios";
 import {set} from "../slices/statusSlice";
-import {API_URL} from "./API_URL";
 import authHeader from "./auth-header";
 
 const getAllStatus = (dispatch) => {
-    return axios.get(`/status`, { headers: authHeader() }).then(
+    return axios.get(`/statuses`, { headers: authHeader() }).then(
         (response) => {
             dispatch(set(response.data));
             console.log(response.data);

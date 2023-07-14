@@ -10,5 +10,10 @@ import java.util.List;
  */
 public interface PriorityService {
 
+    /**
+     * Получает все приоритеты
+     *
+     * @return List<Priority>
+     */
     List<Priority> getPriority();
 }

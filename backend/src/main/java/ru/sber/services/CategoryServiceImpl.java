@@ -52,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public boolean deleteCategoryById(long id) {
+        log.info("Удаляет все задачи в категории и категорию по id {}", id);
 
         taskRepository.deleteAllByCategoryId(id);
         categoryRepository.deleteById(id);

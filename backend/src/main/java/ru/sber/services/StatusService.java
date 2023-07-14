@@ -12,5 +12,10 @@ import java.util.List;
  */
 public interface StatusService {
 
+    /**
+     * Получает все cтатусы
+     *
+     * @return List<Status>
+     */
     List<Status> getStatus();
 }

@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/tasksService";
 import Meta from "antd/es/card/Meta";
 import UpdateTask from "../component/UpdateTask";
-import {useNavigate} from 'react-router-dom';
-import {CheckOutlined, DeleteOutlined} from "@ant-design/icons";
+import {DeleteOutlined} from "@ant-design/icons";
+import categoriesService from "../services/categoriesService";
 
 const {Option} = Select;
 
@@ -21,15 +21,16 @@ const ArchivePage = () => {
     const statusRepository = useSelector((state) => state.status.status);
     const [status, setStatus] = useState('all');
     const {Text, Link} = Typography;
-
-    // let id = useParams()["*"];
-
-    console.log(category)
-
+    const today = new Date();
+    const weekDays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+    const dayOfWeek = weekDays[today.getDay()];
+    const day = today.getDate();
+    const month = months[today.getMonth()];
 
     useEffect(() => {
         taskService.getTaskByArchive(dispatch);
-    }, [dispatch, status]);
+    }, [dispatch, status, category]);
 
     useEffect(() => {
         const filtered = tasks.filter(tasks => (status === "all" || tasks.status.id === status)
@@ -38,51 +39,8 @@ const ArchivePage = () => {
         setFilteredProducts(filtered);
     }, [searchTerm, tasks]);
 
-
     const handleButtonClickToDelete = (task, dispatch) => {
         taskService.deleteTask(task.id, dispatch);
-    }
-    const handleButtonClickToComplete = (task, dispatch) => {
-
-        if (task.status.name !== "EXECUTED") {
-            taskService.updateTask({
-                ...task,
-                "title": task.title,
-                "description": task.description,
-                "deadline": task.deadline,
-                "category": {
-                    "id": task.limitCategory.id
-                },
-                "status": {
-                    "id": 2
-                },
-                "priority": {
-                    "id": task.priority.id
-                },
-                "regularity": {
-                    "id": 1
-                }
-            }, dispatch);
-        } else {
-            taskService.updateTask({
-                ...task,
-                "title": task.title,
-                "description": task.description,
-                "deadline": task.deadline,
-                "category": {
-                    "id": task.limitCategory.id
-                },
-                "status": {
-                    "id": 1
-                },
-                "priority": {
-                    "id": task.priority.id
-                },
-                "regularity": {
-                    "id": 1
-                }
-            }, dispatch);
-        }
     }
 
     const handleDrawerClose = () => {
@@ -101,22 +59,15 @@ const ArchivePage = () => {
         };
     }, [arrow]);
 
-    const today = new Date();
-
-    const weekDays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-    const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
-
-    const dayOfWeek = weekDays[today.getDay()];
-    const day = today.getDate();
-    const month = months[today.getMonth()];
-
     return (
         <div>
             <div>
-                <Meta title="Вы находитетсь в категории " description={<span
-                    style={{fontSize: '20px'}}>Архив</span>}/><br/>
-                <Meta title="Сегодняшняя дата " description={<span
-                    style={{fontSize: '20px'}}>{dayOfWeek + ', ' + day + ' ' + month}</span>}/><br/>
+                <Text style={{fontSize: '18px', color: 'grey' }} >Вы находитесь в категории</Text><br/>
+                <Text style={{fontSize: '20px', color: 'black' }} >Архив</Text><br/><br/>
+
+                <Text style={{fontSize: '18px', color: 'grey' }} >Сегодняшняя дата</Text><br/>
+                <Text style={{fontSize: '20px', color: 'black' }} >{dayOfWeek + ', ' + day + ' ' + month}</Text><br/><br/>
+
 
                 <Select defaultValue="all" style={{marginLeft: 10, width: 150}} onChange={(e) => setStatus(e)}>
                     <Select.Option key="all" value="all">
@@ -141,76 +92,92 @@ const ArchivePage = () => {
             </div>
 
             <Row gutter={[16, 16]}>
-                {filteredProducts.map(task => (
+                {filteredProducts.filter(item => item.limitCategory.name === "Архив").map(task => (
                     <Col span={8} key={task.id}>
                         <Card
                             hoverable
                             style={{
                                 width: 240,
-                                backgroundColor: "#69c0ff",
+                                backgroundColor: (task.status.name === "IN_PROCESS" ? "#bae0ff" :
+                                    task.status.name === "EXECUTED" ? "#d9f7be" : "#ffccc7"),
                                 marginTop: 10
                             }}
                         >
-                            {"" !== task.title ? <> <Meta title="Название" description={<span style={{
-                                    fontSize: '22px',
-                                    ...(task.status.name === "EXECUTED" ? {textDecoration: 'line-through'} : null)
-                                }}>{task.title}</span>}/><br/> </>
-                                : null}
-
-                            {"" !== task.description ? <> <Meta title="Описание" description={<span style={{
-                                    fontSize: '20px',
-                                    ...(task.status.name === "EXECUTED" ? {textDecoration: 'line-through'} : null)
-                                }}>{task.description}</span>}/><br/> </>
-                                : null}
-
-                            {"2026-12-31 00:00:00" !== task.deadline ? <> <Meta title="Срок завершения"
-                                                                                description={<span
-                                                                                    style={{fontSize: '20px'}}>{task.deadline}</span>}/><br/> </>
-                                : null}
-
-                            <Meta title="Статус"/><br/>
-                            {task.status.name === "IN_PROCESS" ? <> <Tag color="#FF7400"><span
-                                style={{fontSize: '20px'}}>{task.status.name}</span></Tag><br/><br/> </> : null}
-                            {task.status.name === "PENDING" ? <> <Tag color="#4512AE"><span
-                                style={{fontSize: '20px'}}>{task.status.name}</span></Tag><br/><br/> </> : null}
-                            {task.status.name === "EXECUTED" ? <> <Tag color="#BFAC30"><span
-                                style={{fontSize: '20px'}}>{task.status.name}</span></Tag><br/><br/> </> : null}
-
-                            <Meta title="Приоритет"/><br/>
-                            {task.priority.name === "LOW" ? <> <Tag color="#FF7400"><span
-                                style={{fontSize: '20px'}}>{task.priority.name}</span></Tag><br/><br/> </> : null}
-                            {task.priority.name === "MEDIUM" ? <> <Tag color="#BFAC30"><span
-                                style={{fontSize: '20px'}}>{task.priority.name}</span></Tag><br/><br/> </> : null}
-                            {task.priority.name === "HIGH" ? <> <Tag color="#4512AE"><span
-                                style={{fontSize: '20px'}}>{task.priority.name}</span></Tag><br/><br/> </> : null}
-
-                            <Meta title="Повторение задачи" description={<span
-                                style={{fontSize: '20px'}}>{task.regularity.dateNotify}</span>}/><br/>
-
-                            <Tooltip placement="top" title="Отметить задачу как выполненое" arrow={mergedArrow}>
-                                <Button
-                                    type="primary"
-                                    style={{marginLeft: 10, marginTop: 10, marginBottom: 10}}
-                                    onClick={() => handleButtonClickToComplete(task, dispatch)}
-                                    icon={<CheckOutlined/>}
-                                >
-                                    {task.status.name === "EXECUTED" ? "Выполнять работу" : "Завершить задачу"}
-                                </Button>
-                            </Tooltip>
-
                             <UpdateTask task={task} drawerVisible={drawerVisible}
                                         handleDrawerClose={handleDrawerClose}/>
 
-                            <Tooltip placement="top" title="Полное удаление задачи" arrow={mergedArrow}>
+                            <Tooltip placement="top" title="Удалить задачу" arrow={mergedArrow}>
                                 <Button
                                     type="primary"
-                                    style={{marginLeft: 15, marginTop: 10}}
+                                    style={{float: "right"}}
                                     onClick={() => handleButtonClickToDelete(task, dispatch)}
                                     icon={<DeleteOutlined/>}
                                 >
-                                    Удалить задачу
                                 </Button>
                             </Tooltip>
+
+                            <br/><Text style={{fontSize: '18px', color: 'grey' }} >Название</Text><br/>
+                            <Text style={{
+                                textDecoration: task.status.name === "EXECUTED" ? 'line-through' : '',
+                                fontSize: '20px',
+                                color: 'black'
+                            }}>
+                                {task.title}
+                            </Text><br/><br/>
+
+                            {task.description !== "" ?
+                                <>
+                                    <Text style={{fontSize: '18px', color: 'grey' }} >Описание</Text><br/>
+                                    <Text style={{
+                                        textDecoration: task.status.name === "EXECUTED" ? 'line-through' : '',
+                                        fontSize: '20px',
+                                        color: 'black'
+                                    }}>
+                                        {task.description}
+                                    </Text><br/><br/>
+                                </>
+                                : null }
+
+                            <Text style={{fontSize: '18px', color: 'grey' }} >Категория</Text><br/>
+                            <Text style={{fontSize: '20px', color: 'black' }} >{task.limitCategory.name}</Text><br/><br/>
+
+                            {task.deadline !== "2026-12-31 00:00:00" ? (
+                                <>
+                                    <Text style={{ fontSize: 18, color: 'grey' }}>Срок завершения</Text><br />
+                                    <Text style={{
+                                        fontSize: 20,
+                                        color: ( ( Math.floor( ( new Date(task.deadline) - new Date() ) / (1000 * 60 * 60 * 24) ) ) > 3 ? 'black' : 'red')
+                                    }}>{task.deadline}</Text><br /><br />
+                                </>
+                            ) : null}
+
+                            <Text style={{fontSize: '18px', color: 'grey' }} >Статус</Text><br/>
+                            {task.status.name === "IN_PROCESS" ? <> <Tag color="#52C41A"><span
+                                style={{fontSize: '20px'}}>{task.status.name}</span></Tag><br/><br/> </> : null}
+                            {task.status.name === "PENDING" ? <> <Tag color="#4096ff"><span
+                                style={{fontSize: '20px'}}>{task.status.name}</span></Tag><br/><br/> </> : null}
+                            {task.status.name === "EXECUTED" ? <> <Tag color="#8c8c8c"><span
+                                style={{fontSize: '20px'}}>{task.status.name}</span></Tag><br/><br/> </> : null}
+
+                            <Text style={{fontSize: '18px', color: 'grey' }} >Приоритет</Text><br/>
+                            {task.priority.name === "LOW" ? <> <Tag color="#ffc53d"><span
+                                style={{fontSize: '20px'}}>{task.priority.name}</span></Tag><br/><br/> </> : null}
+                            {task.priority.name === "MEDIUM" ? <> <Tag color="#008080"><span
+                                style={{fontSize: '20px'}}>{task.priority.name}</span></Tag><br/><br/> </> : null}
+                            {task.priority.name === "HIGH" ? <> <Tag color="#8B0000"><span
+                                style={{fontSize: '20px'}}>{task.priority.name}</span></Tag><br/><br/> </> : null}
+
+                            <Text style={{fontSize: '18px', color: 'grey' }} >Повторение задачи</Text><br/>
+                            {task.regularity.name === "NONE" ? <> <Tag color="#ffa940"><span
+                                style={{fontSize: '20px'}}>{task.regularity.name}</span></Tag><br/><br/> </> : null}
+                            {task.regularity.name === "ONCE" ? <> <Tag color="#4512AE"><span
+                                style={{fontSize: '20px'}}>{task.regularity.name}</span></Tag><br/><br/> </> : null}
+                            {task.regularity.name === "DAILY" ? <> <Tag color="#fadb14"><span
+                                style={{fontSize: '20px'}}>{task.regularity.name}</span></Tag><br/><br/> </> : null}
+                            {task.regularity.name === "WEEKLY" ? <> <Tag color="#ff4d4f"><span
+                                style={{fontSize: '20px'}}>{task.regularity.name}</span></Tag><br/><br/> </> : null}
+                            {task.regularity.name === "MONTHLY" ? <> <Tag color="#ff7a45"><span
+                                style={{fontSize: '20px'}}>{task.regularity.name}</span></Tag><br/><br/> </> : null}
 
                         </Card>
                     </Col>

@@ -5,7 +5,7 @@ import categoriesReducer from "./slices/categoriesSlice";
 import tasksSliceReducer from "./slices/taskSlice";
 import statusSliceReducer from "./slices/statusSlice";
 import prioritySliceReducer from "./slices/prioritySlice";
-
+import regularitySliceReducer from "./slices/regularitySlice";
 
 export default configureStore({
     reducer: {
@@ -15,5 +15,6 @@ export default configureStore({
         tasks: tasksSliceReducer,
         status: statusSliceReducer,
         priority: prioritySliceReducer,
+        regularity: regularitySliceReducer,
     },
 });

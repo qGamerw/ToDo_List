@@ -9,7 +9,7 @@ import ru.sber.entities.Status;
 import java.util.List;
 
 /**
- * Репозиторий с категориями
+ * Репозиторий со статусом
  */
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
