@@ -19,13 +19,25 @@ public interface CategoryService {
     long addCategory(Category category);
 
     /**
-     * Возвращает категорию по id
+     * Возвращает категории по id пользователя
      *
-     * @return категория
+     * @return категории
      */
     List<LimitCategory> getCategoryById();
 
+    /**
+     * Возвращает категорию по id
+     *
+     * @param id id категории
+     * @return категория
+     */
     LimitCategory getCategoryById(long id);
 
+    /**
+     * Удаляет категорию по id
+     *
+     * @param id id категории
+     * @return категория
+     */
     boolean deleteCategoryById(long id);
 }

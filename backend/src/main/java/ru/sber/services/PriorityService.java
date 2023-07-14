@@ -6,7 +6,7 @@ import ru.sber.entities.Status;
 import java.util.List;
 
 /**
- * Сервис для взаимодействия с категориями
+ * Сервис для взаимодействия с приоритетами
  */
 public interface PriorityService {
 

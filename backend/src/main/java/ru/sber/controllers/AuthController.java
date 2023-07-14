@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Класс для взаимодействия с регистрацией
+ * Класс для взаимодействия с регистрацией и входом
  */
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -86,6 +86,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        log.info("Регистрация пользователя с логином {}", signUpRequest.getUsername());
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Пользователь уже существует"));
         }

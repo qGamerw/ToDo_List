@@ -1,7 +1,7 @@
 package ru.sber.entities;
 
 /**
- * Перечисление все статусов
+ * Перечисление все повторений
  */
 public enum ERegularity {
     DAILY,

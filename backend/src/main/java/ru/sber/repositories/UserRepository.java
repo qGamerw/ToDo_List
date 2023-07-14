@@ -7,7 +7,7 @@ import ru.sber.entities.User;
 import java.util.Optional;
 
 /**
- * Хранилище с данными о пользователях
+ * Репозиторий с данными о пользователях
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

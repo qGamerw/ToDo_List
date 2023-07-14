@@ -5,7 +5,7 @@ import ru.sber.entities.Regularity;
 import java.util.List;
 
 /**
- * Сервис для взаимодействия с категориями
+ * Сервис для взаимодействия с повторениями
  */
 public interface RegularityService {
 

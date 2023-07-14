@@ -58,5 +58,10 @@ public interface TaskService {
      */
     List<LimitTask> getListTaskByStatusByName(Status status);
 
+    /**
+     * Возвращает задачи в архиве
+     *
+     * @return задачи
+     */
     List<LimitTask> getListTaskByArchive();
 }

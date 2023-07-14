@@ -8,12 +8,12 @@ import ru.sber.model.LimitCategory;
 import java.util.List;
 
 /**
- * Сервис для взаимодействия с категориями
+ * Сервис для взаимодействия со статусами
  */
 public interface StatusService {
 
     /**
-     * Получает все cтатусы
+     * Получает все статусы
      *
      * @return List<Status>
      */

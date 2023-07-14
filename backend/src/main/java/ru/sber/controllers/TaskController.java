@@ -36,7 +36,7 @@ public class TaskController {
 
     @PutMapping
     public ResponseEntity<List<LimitTask>> updateTask(@RequestBody Task task) {
-        log.info("Обновляет задачу по id {}", task.getId());
+        log.info("Обновляет задачу {}", task.getId());
 
         var isUpdate = taskService.update(task);
 
@@ -75,7 +75,7 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<LimitTask>> getListTaskByStatusName(@RequestBody Status status) {
-        log.info("Получает задачи по пользователю");
+        log.info("Получает задачи по имени статуса");
 
         List<LimitTask> listTask = taskService.getListTaskByStatusByName(status);
 
@@ -86,7 +86,7 @@ public class TaskController {
 
     @GetMapping("/archive")
     public ResponseEntity<List<LimitTask>> getListTaskByArchive() {
-        log.info("Получает задачи по пользователю");
+        log.info("Получает задачи по имени архива");
 
         List<LimitTask> listTask = taskService.getListTaskByArchive();
 

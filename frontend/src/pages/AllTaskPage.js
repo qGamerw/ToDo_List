@@ -333,7 +333,7 @@ const AllTaskPage = () => {
                             : null }
 
                             <Text style={{fontSize: '18px', color: 'grey' }} >Категория</Text><br/>
-                            <Text style={{fontSize: '20px', color: 'black' }} >{task.limitCategory.name}</Text><br/><br/>
+                            <Tag color="#f759ab"><span style={{fontSize: '20px'}}>{task.limitCategory.name}</span></Tag><br/><br/>
 
                             {task.deadline !== "2026-12-31 00:00:00" ? (
                                 <>

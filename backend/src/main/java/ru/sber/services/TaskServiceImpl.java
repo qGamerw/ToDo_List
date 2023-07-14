@@ -3,6 +3,8 @@ package ru.sber.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ru.sber.entities.ERegularity;
+import ru.sber.entities.EStatus;
 import ru.sber.entities.Status;
 import ru.sber.entities.Task;
 import ru.sber.exceptions.NoFoundCategoryException;
@@ -12,6 +14,7 @@ import ru.sber.repositories.CategoryRepository;
 import ru.sber.repositories.TaskRepository;
 import ru.sber.security.services.UserDetailsImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
