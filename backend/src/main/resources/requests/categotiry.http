@@ -1,0 +1,27 @@
+# создаить категорию у пользователя
+
+POST http://localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZnNkZmtvcG91aSIsImlhdCI6MTY4OTAwMzQ4NywiZXhwIjoxNjg5MDg5ODg3fQ.syphUsUE-hTReqGjk56Wopw_VJhNaSqDW5b4iDL_BG0
+Content-Type: application/json
+
+{
+  "name": "categories20"
+}
+
+###
+# получать категории у пользователя
+GET http://localhost:8080/categories/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTIiLCJpYXQiOjE2ODkyNDk4ODMsImV4cCI6MTY4OTMzNjI4M30.ZifvUkX2M2xyzFpSkAZOCzXnccI1aMdsE0QuANMNm9s
+Accept: application/json
+
+###
+# получать категорию по id
+GET http://localhost:8080/categories/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZGZzZGYzMjRzZiIsImlhdCI6MTY4OTE3NDY0NSwiZXhwIjoxNjg5MjYxMDQ1fQ.nCcE7YDepp4u3Vx2q0C6sBHFSJSlPl08rOwoMKn2u5M
+Accept: application/json
+
+###
+# удалить категорию по id
+DELETE http://localhost:8080/categories/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZGZzZGZzZGYzMjRzZiIsImlhdCI6MTY4OTE3NDY0NSwiZXhwIjoxNjg5MjYxMDQ1fQ.nCcE7YDepp4u3Vx2q0C6sBHFSJSlPl08rOwoMKn2u5M
+Accept: application/json

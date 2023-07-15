@@ -1,0 +1,6 @@
+###
+# получить задачи по id категории
+GET http://localhost:8080/statuses
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZTIiLCJpYXQiOjE2ODkyNDk4ODMsImV4cCI6MTY4OTMzNjI4M30.ZifvUkX2M2xyzFpSkAZOCzXnccI1aMdsE0QuANMNm9s
+Accept: application/json
+
